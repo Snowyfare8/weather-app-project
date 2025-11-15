@@ -56,20 +56,20 @@ window.geometry('900x600')
 
 city_label = Label(window, text='City: ' + city)
 
-currentweather_label = Label(window, text='Current Weather in ' + city)
+currentweather_label = Label(window, text ='Current Weather in ' + city)
 
-temp_label = Label(window, text='Temperature')
-temp_display = Label(window, text= hourly_data["temperature_2m"])
+temp_label = Label(window, text ='Temperature')
+temp_display = Label(window, text = {"current_temperature_2m"})
 
 wind_label = Label(window, text='Wind Speed & Direction')
-windspeed_display = Label(window, text= hourly_data["wind_speed_10m"])
-winddirection_display = Label(window, text= hourly_data["wind_direction_10m"])
+windspeed_display = Label(window, text = {"current_wind_speed_10m"})
+winddirection_display = Label(window, text = {"current_wind_direction_10m"})
 
-uv_label = Label(window, text='UV Index')
-uv_display = Label(window, text= daily_data["uv_index_max"] )
+uv_label = Label(window, text ='UV Index')
+uv_display = Label(window, text = daily_data["uv_index_max"] )
 
-humidity_label = Label(window, text='Humidity')
-humidity_display = Label(window, text= hourly_data["relative_humidity_2m"])
+humidity_label = Label(window, text ='Humidity')
+humidity_display = Label(window, text = {"current_relative_humidity_2m"})
 
 
 city_label.grid(row = 0, column = 1, sticky = W, padx = 2, pady = 2 )
@@ -90,3 +90,4 @@ humidity_display.grid(row = 7, column = 5, sticky = W, padx = 2, pady = 2)
 
 
 window.mainloop()
+
