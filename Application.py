@@ -26,7 +26,7 @@ if "results" in geo_res:
     params = {
         "latitude": lat,
         "longitude": lon,
-        "current": ["temperature_2m", "relative_humidity_2m", "wind_speed_10m", "wind_direction_10m"]
+        "current": ["temperature_2m", "relative_humidity_2m", "wind_speed_10m", "wind_direction_10m"],
         "daily": ["uv_index_max"]
     }
     responses = openmeteo.weather_api(url, params=params)
@@ -90,4 +90,5 @@ humidity_display.grid(row = 7, column = 5, sticky = W, padx = 2, pady = 2)
 
 
 window.mainloop()
+
 
