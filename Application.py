@@ -26,31 +26,26 @@ if "results" in geo_res:
     params = {
         "latitude": lat,
         "longitude": lon,
-        "hourly": ["temperature_2m","relative_humidity_2m","wind_speed_180m","wind_direction_180m", "uv_index"]
+        "current": ["temperature_2m", "relative_humidity_2m", "wind_speed_10m", "wind_direction_10m"]
+        "daily": ["uv_index_max"]
     }
     responses = openmeteo.weather_api(url, params=params)
 
     response = responses[0]
-    hourly = response.Hourly()
-    hourly_temp = hourly.Variables(0).ValuesAsNumpy()
-    hourly_humidity = hourly.Variables(1).ValuesAsNumpy()
-    hourly_windspeed = hourly.Variables(2).ValuesAsNumpy()
-    hourly_winddirection = hourly.Variables(3).ValuesAsNumpy()
-    hourly_uvindex = hourly.Variables(4).ValuesAsNumpy()
+    current = response.Current()
+    current_temp = current.Variables(0).ValuesAsNumpy()
+    current_humidity = current.Variables(1).ValuesAsNumpy()
+    current_windspeed = current.Variables(2).ValuesAsNumpy()
+    current_winddirection = current.Variables(3).ValuesAsNumpy()
 
-    hourly_data = {"date": pd.date_range(
-        start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
-        end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True),
-        freq = pd.Timedelta(seconds = hourly.Interval()),
+    daily_data = {"date": pd.date_range(
+        start = pd.to_datetime(daily.Time(), unit = "s", utc = True),
+        end = pd.to_datetime(daily.TimeEnd(), unit = "s", utc = True),
+        freq = pd.Timedelta(seconds = daily.Interval()),
         inclusive = "left"
     )}
 
-    # Assign hourly data to hourly variables
-    hourly_data["temperature_2m"] = hourly_temp
-    hourly_data["relative_humidity_2m"] = hourly_humidity
-    hourly_data["wind_speed_180m"] = hourly_windspeed
-    hourly_data["wind_direction_180m"] = hourly_winddirection
-    hourly_data["uv_index"] = hourly_uvindex
+    daily_data["uv_index_max"] = daily_uvindex
 
 
 # GUI
@@ -67,11 +62,11 @@ temp_label = Label(window, text='Temperature')
 temp_display = Label(window, text= hourly_data["temperature_2m"])
 
 wind_label = Label(window, text='Wind Speed & Direction')
-windspeed_display = Label(window, text= hourly_data["wind_speed_180m"])
-winddirection_display = Label(window, text= hourly_data["wind_direction_180m"])
+windspeed_display = Label(window, text= hourly_data["wind_speed_10m"])
+winddirection_display = Label(window, text= hourly_data["wind_direction_10m"])
 
 uv_label = Label(window, text='UV Index')
-uv_display = Label(window, text= hourly_data["uv_index"] )
+uv_display = Label(window, text= daily_data["uv_index_max"] )
 
 humidity_label = Label(window, text='Humidity')
 humidity_display = Label(window, text= hourly_data["relative_humidity_2m"])
@@ -92,5 +87,6 @@ uv_display.grid(row = 7, column =4, sticky = W, padx = 2, pady = 2)
 
 humidity_label.grid(row = 6, column = 5, sticky = W, padx = 2, pady = 2)
 humidity_display.grid(row = 7, column = 5, sticky = W, padx = 2, pady = 2)
+
 
 window.mainloop()
