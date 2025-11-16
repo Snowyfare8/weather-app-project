@@ -1,13 +1,12 @@
 #Application Prototype
-from API import daily_data, hourly_data
+from API import city, daily_data, hourly_data
 import numpy as np
 import matplotlib as mpl
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 from tkinter import *
-
 
 # Weather Graphs
 def uv_weather_graph():
@@ -111,7 +110,6 @@ menu.add_command(label='Settings')
 menu.add_command(label='Exit', command=window.quit)
 
 city_label = Label(window, text='City: ' + city)
-city_entry = Entry(window)(window, width=20, command = city)
 currentweather_label = Label(window, text ='Current Weather in ' + city)
 
 temp_label = Label(window, text ='Temperature')
@@ -128,7 +126,6 @@ humidity_label = Label(window, text ='Humidity')
 humidity_display = Button(window, text = "Humidity Graph", command = humidity_weather_graph)
 
 city_label.grid(row = 0, column = 1, sticky = W, padx = 2, pady = 2 )
-city_entry.grid(row = 0, column = 2, sticky = W, padx = 2, pady = 2)
 currentweather_label.grid(row = 3, column = 1, sticky = W, padx = 2, pady = 50) 
 
 temp_label.grid(row = 6, column = 1, sticky = W, padx = 2, pady = 2)
