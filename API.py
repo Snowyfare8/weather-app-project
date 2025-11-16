@@ -1,11 +1,14 @@
-from Application import city
 import openmeteo_requests
+import geocoder
 import pandas as pd
 import requests_cache
 from retry_requests import retry
 import requests
 
 # Geolocator
+ip = geocoder.ip('me')
+print(ip.city)
+city = ip.city 
 geo_url = "https://geocoding-api.open-meteo.com/v1/search"
 geo_params = {"name": city, "count": 1}
 geo_res = requests.get(geo_url, params=geo_params).json()
