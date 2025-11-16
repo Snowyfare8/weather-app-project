@@ -1,79 +1,135 @@
 #Application Prototype
-import openmeteo_requests
-import pandas as pd
-import requests_cache
-from retry_requests import retry
+from API import daily_data, hourly_data
+import numpy as np
+import matplotlib as mpl
+from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from tkinter import *
-import requests
 
-# Geolocator
-city = input('Enter city: ')
-geo_url = "https://geocoding-api.open-meteo.com/v1/search"
-geo_params = {"name": city, "count": 1}
-geo_res = requests.get(geo_url, params=geo_params).json()
 
-# API 1
-cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
-retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
-openmeteo = openmeteo_requests.Client(session = retry_session)
+# Weather Graphs
+def uv_weather_graph():
+    fig = Figure(figsize = (5, 5), dpi = 100)
 
-# API 2
-if "results" in geo_res:
-    lat = geo_res["results"][0]["latitude"]
-    lon = geo_res["results"][0]["longitude"]
+    x = np.array(daily_data["date"])
+    y = np.array(daily_data["uv_index_max"])
+    
+    canvas = FigureCanvasTkAgg(fig, master = window)  
+    canvas.draw()
+    
+    canvas.get_tk_widget().grid(row = 10, column = 1)
+    
+    plt.plot(x, y)
+    plt.xlabel("By days")
+    plt.ylabel("UV Index")
 
-    url = "https://api.open-meteo.com/v1/forecast"
-    params = {
-        "latitude": lat,
-        "longitude": lon,
-        "current": ["temperature_2m", "relative_humidity_2m", "wind_speed_10m", "wind_direction_10m"],
-        "daily": ["uv_index_max"]
-    }
-    responses = openmeteo.weather_api(url, params=params)
+    plt.title("UV Index Today")
 
-    response = responses[0]
-    current = response.Current()
-    current_temp = current.Variables(0).ValuesAsNumpy()
-    current_humidity = current.Variables(1).ValuesAsNumpy()
-    current_windspeed = current.Variables(2).ValuesAsNumpy()
-    current_winddirection = current.Variables(3).ValuesAsNumpy()
+def temp_weather_graph():
+    fig = Figure(figsize = (5, 5), dpi = 100)
 
-    daily_data = {"date": pd.date_range(
-        start = pd.to_datetime(daily.Time(), unit = "s", utc = True),
-        end = pd.to_datetime(daily.TimeEnd(), unit = "s", utc = True),
-        freq = pd.Timedelta(seconds = daily.Interval()),
-        inclusive = "left"
-    )}
+    x = np.array(hourly_data["date"])
+    y = np.array(hourly_data["temperature_2m"])
 
-    daily_data["uv_index_max"] = daily_uvindex
+    canvas = FigureCanvasTkAgg(fig, master = window)  
+    canvas.draw()
+    
+    canvas.get_tk_widget().grid(row = 10, column = 1)
 
+    plt.plot(x, y)
+    plt.xlabel("By hours")
+    plt.ylabel("Temperature (°C)")
+
+    plt.title("Temperature 2m")
+
+def wind_speed_weather_graph():
+    fig = Figure(figsize = (5, 5), dpi = 100)
+
+    x = np.array(hourly_data["date"])
+    y = np.array(hourly_data["wind_speed_180m"])
+
+    canvas = FigureCanvasTkAgg(fig, master = window)  
+    canvas.draw()
+  
+    canvas.get_tk_widget().grid(row = 10, column = 1)
+
+    plt.plot(x, y)
+    plt.xlabel("By hours")
+    plt.ylabel("Wind Speed (m/s)")
+
+    plt.title("Wind Speed 180m")    
+
+def wind_direction_weather_graph():
+    fig = Figure(figsize = (5, 5), dpi = 100)
+
+    x = np.array(hourly_data["date"])
+    y = np.array(hourly_data["wind_direction_180m"])
+
+    canvas = FigureCanvasTkAgg(fig, master = window)  
+    canvas.draw()
+
+    canvas.get_tk_widget().grid(row = 10, column = 1)
+
+    plt.plot(x, y)
+    plt.xlabel("By hours")
+    plt.ylabel("Wind Direction (°)")
+
+    plt.title("Wind Direction 180m")
+
+def humidity_weather_graph():
+    fig = Figure(figsize = (5, 5), dpi = 100)
+
+    x = np.array(hourly_data["date"])
+    y = np.array(hourly_data["relative_humidity_2m"])
+
+    canvas = FigureCanvasTkAgg(fig, master = window)  
+    canvas.draw()
+  
+    canvas.get_tk_widget().grid(row = 10, column = 1)
+    
+    plt.plot(x, y)
+    plt.xlabel("By hours")
+    plt.ylabel("Relative Humidity (%)")
+
+    plt.title("Relative Humidity 2m")   
 
 # GUI
 window = Tk()
 window.title('Python Weather Application')
 
 window.geometry('900x600')
+menu = Menu(window)
+window.config(menu=menu)
+timemenu = Menu(menu)
+menu.add_cascade(label='By Time', menu=timemenu)
+timemenu.add_command(label='Current')
+timemenu.add_command(label='Hourly')
+timemenu.add_command(label='Weekly')
+menu.add_command(label='Settings')
+menu.add_command(label='Exit', command=window.quit)
 
 city_label = Label(window, text='City: ' + city)
-
+city_entry = Entry(window)(window, width=20, command = city)
 currentweather_label = Label(window, text ='Current Weather in ' + city)
 
 temp_label = Label(window, text ='Temperature')
-temp_display = Label(window, text = {"current_temperature_2m"})
+temp_display = Button(window, text = "Temperature Graph", command = temp_weather_graph)
 
 wind_label = Label(window, text='Wind Speed & Direction')
-windspeed_display = Label(window, text = {"current_wind_speed_10m"})
-winddirection_display = Label(window, text = {"current_wind_direction_10m"})
+windspeed_display = Button(window, text = "Wind Speed Graph", command = wind_speed_weather_graph)
+winddirection_display = Button(window, text = "Wind Direction Graph", command = wind_direction_weather_graph)
 
 uv_label = Label(window, text ='UV Index')
-uv_display = Label(window, text = daily_data["uv_index_max"] )
+uv_display = Button(window, text = "UV Index Graph", command = uv_weather_graph)
 
 humidity_label = Label(window, text ='Humidity')
-humidity_display = Label(window, text = {"current_relative_humidity_2m"})
-
+humidity_display = Button(window, text = "Humidity Graph", command = humidity_weather_graph)
 
 city_label.grid(row = 0, column = 1, sticky = W, padx = 2, pady = 2 )
-currentweather_label.grid(row = 3, column = 1, sticky = W, padx = 2, pady = 50)
+city_entry.grid(row = 0, column = 2, sticky = W, padx = 2, pady = 2)
+currentweather_label.grid(row = 3, column = 1, sticky = W, padx = 2, pady = 50) 
 
 temp_label.grid(row = 6, column = 1, sticky = W, padx = 2, pady = 2)
 temp_display.grid(row = 7, column = 1, sticky = W, padx = 2, pady = 2)
@@ -90,5 +146,3 @@ humidity_display.grid(row = 7, column = 5, sticky = W, padx = 2, pady = 2)
 
 
 window.mainloop()
-
-
