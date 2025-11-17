@@ -1,28 +1,27 @@
 #Application Prototype
+# API data imports
 from API import city, daily_data, hourly_data
+# Graphing imports
 import numpy as np
 import matplotlib as mpl
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
-from tkinter import *
+# GUI imports
+import tkinter as tk
+import customtkinter as ctk
+from customtkinter import *
 
-# Weather Graphs
+# Weather Graphs - gui rework needed
 def uv_weather_graph():
-    fig = Figure(figsize = (10, 5), dpi = 100)
+    fig = Figure(figsize = (10, 5))
 
     plt.plot(daily_data["date"], daily_data["uv_index_max"], label="UV Index")
     
     canvas = FigureCanvasTkAgg(fig, master = window)  
-    canvas.draw()
     
-    canvas.get_tk_widget().pack()
-    
-    toolbar = NavigationToolbar2Tk(canvas, window)
-    toolbar.update()
-
-    canvas.get_tk_widget().pack()
+    toolbar = NavigationToolbar2Tk(canvas, window, pack_toolbar=False)
 
     plt.xlabel("By days")
     plt.ylabel("UV Index")
@@ -33,19 +32,13 @@ def uv_weather_graph():
     plt.show()
 
 def temp_weather_graph():
-    fig = Figure(figsize = (10, 5), dpi = 100)
+    fig = Figure(figsize = (10, 5))
 
     plt.plot(hourly_data["date"], hourly_data["temperature_2m"], label="Temperature (°C)")
 
     canvas = FigureCanvasTkAgg(fig, master = window)  
-    canvas.draw()
-    
-    canvas.get_tk_widget().pack()
 
-    toolbar = NavigationToolbar2Tk(canvas, window)
-    toolbar.update()
-
-    canvas.get_tk_widget().pack()
+    toolbar = NavigationToolbar2Tk(canvas, window, pack_toolbar=False)
 
     plt.xlabel("By hours")
     plt.ylabel("Temperature (°C)")
@@ -56,19 +49,13 @@ def temp_weather_graph():
     plt.show()
 
 def wind_speed_weather_graph():
-    fig = Figure(figsize = (10, 5), dpi = 100)
+    fig = Figure(figsize = (10, 5))
 
     plt.plot(hourly_data["date"], hourly_data["wind_speed_180m"], label="Wind Speed (m/s)")
 
-    canvas = FigureCanvasTkAgg(fig, master = window)  
-    canvas.draw()
-  
-    canvas.get_tk_widget().pack()
+    canvas = FigureCanvasTkAgg(fig, master = window)
 
-    toolbar = NavigationToolbar2Tk(canvas, window)
-    toolbar.update()
-
-    canvas.get_tk_widget().pack()
+    toolbar = NavigationToolbar2Tk(canvas, window, pack_toolbar=False)
 
     plt.xlabel("By hours")
     plt.ylabel("Wind Speed (m/s)")
@@ -79,19 +66,14 @@ def wind_speed_weather_graph():
     plt.show()
 
 def wind_direction_weather_graph():
-    fig = Figure(figsize = (10, 5), dpi = 100)
+
+    fig = Figure(figsize = (10, 5))
 
     plt.plot(hourly_data["date"], hourly_data["wind_direction_180m"], label="Direction (°)")
 
     canvas = FigureCanvasTkAgg(fig, master = window)  
-    canvas.draw()
 
-    canvas.get_tk_widget().pack()
-
-    toolbar = NavigationToolbar2Tk(canvas, window)
-    toolbar.update()
-
-    canvas.get_tk_widget().pack()
+    toolbar = NavigationToolbar2Tk(canvas, window, pack_toolbar=False)
 
     plt.xlabel("By hours")
     plt.ylabel("Wind Direction (°)")
@@ -101,21 +83,14 @@ def wind_direction_weather_graph():
     plt.tight_layout()
     plt.show()
 
-
 def humidity_weather_graph():
-    fig = Figure(figsize = (10  , 5), dpi = 100)
+    fig = Figure(figsize = (10  , 5))
 
     plt.plot(hourly_data["date"], hourly_data["relative_humidity_2m"], label="Humidity (%)")
 
     canvas = FigureCanvasTkAgg(fig, master = window)  
-    canvas.draw()
-  
-    canvas.get_tk_widget().pack()
 
-    toolbar = NavigationToolbar2Tk(canvas, window)
-    toolbar.update()
-
-    canvas.get_tk_widget().pack()
+    toolbar = NavigationToolbar2Tk(canvas, window, pack_toolbar=False)
     
     plt.xlabel("By hours")
     plt.ylabel("Relative Humidity (%)")
@@ -125,52 +100,44 @@ def humidity_weather_graph():
     plt.tight_layout()
     plt.show()
 
-# GUI
-window = Tk()
+# GUI - rework needed
+window = ctk.CTk()  
 window.title('Python Weather Application')
 
-window.geometry('900x600')
-menu = Menu(window)
-window.config(menu=menu)
-timemenu = Menu(menu)
-menu.add_cascade(label='By Time', menu=timemenu)
-timemenu.add_command(label='Current')
-timemenu.add_command(label='Hourly')
-timemenu.add_command(label='Weekly')
-menu.add_command(label='Settings')
-menu.add_command(label='Exit', command=window.quit)
+window.geometry('900x800')
 
-city_label = Label(window, text='City: ' + city)
-currentweather_label = Label(window, text ='Current Weather in ' + city)
+menu = tk.Menu(window)
+window.config(menu = menu)
+timemenu = tk.Menu(menu)
+menu.add_cascade(label = 'By Time', menu = timemenu)
+timemenu.add_command(label = 'Current')
+timemenu.add_command(label = 'Hourly')
+timemenu.add_command(label = 'Weekly')
+menu.add_command(label = 'Settings')
+menu.add_command(label = 'Exit', command=window.quit)
 
-temp_label = Label(window, text ='Temperature')
-temp_display = Button(window, text = "Temperature Graph", command = temp_weather_graph)
+city_label = ctk.CTkLabel(window, text='Your City: ' + city, font = ("Courier New", 22, "bold"))
+currentweather_label = ctk.CTkLabel(window, text ='Current Weather in ' + city, font = ("Courier New", 18))
 
-wind_label = Label(window, text='Wind Speed & Direction')
-windspeed_display = Button(window, text = "Wind Speed Graph", command = wind_speed_weather_graph)
-winddirection_display = Button(window, text = "Wind Direction Graph", command = wind_direction_weather_graph)
+temp_button = ctk.CTkButton(window, text = "Temperature Graph", command = temp_weather_graph)
 
-uv_label = Label(window, text ='UV Index')
-uv_display = Button(window, text = "UV Index Graph", command = uv_weather_graph)
+windspeed_button = ctk.CTkButton(window, text = "Wind Speed Graph", command = wind_speed_weather_graph)
+winddirection_button = ctk.CTkButton(window, text = "Wind Direction Graph", command = wind_direction_weather_graph)
 
-humidity_label = Label(window, text ='Humidity')
-humidity_display = Button(window, text = "Humidity Graph", command = humidity_weather_graph)
+uv_button = ctk.CTkButton(window, text = "UV Index Graph", command = uv_weather_graph)
 
-city_label.pack()
-currentweather_label.pack()
+humidity_button = ctk.CTkButton(window, text = "Humidity Graph", command = humidity_weather_graph)
 
-temp_label.pack()
-temp_display.pack()
+city_label.grid(row = 0, column = 0, sticky = W, padx = 10, pady = 10)
+currentweather_label.grid(row = 3, column = 0, sticky = W, padx = 10, pady = 10)
 
-wind_label.pack()
-windspeed_display.pack()
-winddirection_display.pack()
+temp_button.grid(row = 6, column = 0, sticky = W, padx = 10, pady = 10)
 
-uv_label.pack()
-uv_display.pack()
+windspeed_button.grid(row = 6, column = 3, sticky = W, padx = 10, pady = 10)
+winddirection_button.grid(row = 6, column = 6, sticky = W, padx = 10, pady = 10)
 
-humidity_label.pack()
-humidity_display.pack()
+uv_button.grid(row = 6, column = 9, sticky = W, padx = 10, pady = 10)
 
+humidity_button.grid(row = 6, column = 12, sticky = W, padx = 10, pady = 10)
 
 window.mainloop()
