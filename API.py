@@ -1,3 +1,4 @@
+# API Prototype
 import openmeteo_requests
 import geocoder
 import pandas as pd
@@ -18,7 +19,7 @@ cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
 retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
 openmeteo = openmeteo_requests.Client(session = retry_session)
 
-# API 2
+# API 2 - rework maybe needed           
 if "results" in geo_res:
     lat = geo_res["results"][0]["latitude"]
     lon = geo_res["results"][0]["longitude"]
@@ -28,7 +29,10 @@ if "results" in geo_res:
         "latitude": lat,
         "longitude": lon,
         "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m"],
-        "daily": ["uv_index_max"]
+        "daily": ["uv_index_max"],
+	    "timezone": "auto",
+	    "forecast_days": 1,
+	    "wind_speed_unit": "ms"
     }
     responses = openmeteo.weather_api(url, params=params)
 
@@ -72,4 +76,3 @@ if "results" in geo_res:
     print("\nHourly data\n", hourly_dataframe)
     daily_dataframe = pd.DataFrame(data = daily_data)
     print("\nDaily data\n", daily_dataframe)
-
