@@ -28,8 +28,7 @@ if "results" in geo_res:
     params = {
         "latitude": lat,
         "longitude": lon,
-        "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m"],
-        "daily": ["uv_index_max"],
+        "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m", "uv_index"],
 	    "timezone": "auto",
 	    "forecast_days": 1,
 	    "wind_speed_unit": "ms"
