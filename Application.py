@@ -1,6 +1,6 @@
 #Application Prototype
 # API data imports
-from API import city, daily_data, hourly_data
+from API import city, hourly_data
 # Graphing imports
 import numpy as np
 import matplotlib as mpl
@@ -111,22 +111,22 @@ def humidity_weather_graph():
     plt.title("Relative Humidity 2m")   
 
 # GUI - rework needed
-window = tk.Tk()  
+window = ctk.CTk()  
 window.title('Python Weather Application')
 window.geometry('1200x800')
 
 
-city_label = tk.Label(window, text='Your City: ' + city, font = ("Courier New", 22, "bold"))
-currentweather_label = tk.Label(window, text ='Current Weather in ' + city, font = ("Courier New", 18))
+city_label = ctk.CTkLabel(window, text='Your City: ' + city, font = ("Courier New", 22, "bold"))
+currentweather_label = ctk.CTkLabel(window, text ='Current Weather in ' + city, font = ("Courier New", 18))
 
-temp_button = tk.Button(window, text = "Temperature Graph", command = temp_weather_graph)
+temp_button = ctk.CTkButton(window, text = "Temperature Graph", command = temp_weather_graph)
 
-windspeed_button = tk.Button(window, text = "Wind Speed Graph", command = wind_speed_weather_graph)
-winddirection_button = tk.Button(window, text = "Wind Direction Graph", command = wind_direction_weather_graph)
+windspeed_button = ctk.CTkButton(window, text = "Wind Speed Graph", command = wind_speed_weather_graph)
+winddirection_button = ctk.CTkButton(window, text = "Wind Direction Graph", command = wind_direction_weather_graph)
 
-uv_button = tk.Button(window, text = "UV Index Graph", command = uv_weather_graph)
+uv_button = ctk.CTkButton(window, text = "UV Index Graph", command = uv_weather_graph)
 
-humidity_button = tk.Button(window, text = "Humidity Graph", command = humidity_weather_graph)
+humidity_button = ctk.CTkButton(window, text = "Humidity Graph", command = humidity_weather_graph)
 
 city_label.grid(row = 0, column = 0, sticky = W, padx = 10, pady = 10)
 currentweather_label.grid(row = 3, column = 0, sticky = W, padx = 10, pady = 10)
