@@ -8,7 +8,6 @@ import requests
 
 # Geolocator
 ip = geocoder.ip('me')
-print(ip.city)
 city = ip.city 
 geo_url = "https://geocoding-api.open-meteo.com/v1/search"
 geo_params = {"name": city, "count": 1}
@@ -29,6 +28,7 @@ if "results" in geo_res:
         "latitude": lat,
         "longitude": lon,
         "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m", "uv_index"],
+        "current": ["temperature_2m", "relative_humidity_2m", "is_day", "wind_direction_10m", "wind_speed_10m", "apparent_temperature"],
 	    "timezone": "auto",
 	    "forecast_days": 1,
 	    "wind_speed_unit": "ms"
@@ -38,7 +38,16 @@ if "results" in geo_res:
     response = responses[0]
     print(f"Coordinates: {response.Latitude()}°N {response.Longitude()}°E")
     print(f"Elevation: {response.Elevation()} m asl")
+    print(f"Timezone: {response.Timezone()}{response.TimezoneAbbreviation()}")
     print(f"Timezone difference to GMT+0: {response.UtcOffsetSeconds()}s")
+
+    current = response.Current()
+    current_temp = current.Variables(0).Value()
+    current_humidity = current.Variables(1).Value()
+    current_is_day = current.Variables(2).Value()
+    current_winddirection = current.Variables(3).Value()
+    current_windspeed = current.Variables(4).Value()
+    current_apptemp = current.Variables(5).Value()
 
     response = responses[0]
     hourly = response.Hourly()
@@ -63,3 +72,11 @@ if "results" in geo_res:
 
     hourly_dataframe = pd.DataFrame(data = hourly_data)
     print("\nHourly data\n", hourly_dataframe)
+
+    print(f"\nCurrent time: {current.Time()}")
+    print(f"Current temperature_2m: {current_temp}")
+    print(f"Current relative_humidity_2m: {current_humidity}")
+    print(f"Current is_day: {current_is_day}")
+    print(f"Current wind_direction_10m: {current_winddirection}")
+    print(f"Current wind_speed_10m: {current_windspeed}")
+    print(f"Current apparent_temperature: {current_apptemp}")
