@@ -15,103 +15,6 @@ import customtkinter as ctk
 from customtkinter import *
 import seaborn as sb
 
-# Weather Graphs - gui rework needed
-def temp_weather_graph():
-    fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
-
-    plot1 = fig.add_subplot(111)
-    
-    plot1.plot(hourly_data["date"], hourly_data["temperature_2m"], label = "Temperature (°C)")
-
-    canvas = FigureCanvasTkAgg(fig, master = App)  
-    canvas.draw()
-    canvas.get_tk_widget().grid(row = 5, column = 3, pady = 10, sticky = "nsew")
-
-    toolbar = NavigationToolbar2Tk(canvas, App, pack_toolbar = False)
-    toolbar.update()
-    canvas.get_tk_widget().grid(row = 5, column = 3, pady = 10)
-
-    plt.xlabel("By hours")
-    plt.ylabel("Temperature (°C)")
-    plt.title("Temperature 2m")   
-
-def wind_speed_weather_graph():
-    fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
-
-    plot1 = fig.add_subplot(111)
-
-    plot1.plot(hourly_data["date"], hourly_data["wind_speed_180m"], label = "Wind Speed (m/s)")
-
-    canvas = FigureCanvasTkAgg(fig, master = App)  
-    canvas.draw()
-    canvas.get_tk_widget().grid(row = 5, column = 3, pady = 10)
-
-    toolbar = NavigationToolbar2Tk(canvas, App, pack_toolbar = False)
-    toolbar.update()
-    canvas.get_tk_widget().grid(row = 5, column = 3, pady = 10)
-
-    plt.xlabel("By hours")
-    plt.ylabel("Wind Speed (m/s)")
-    plt.title("Wind Speed 180m")    
-
-def wind_direction_weather_graph():
-
-    fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
-
-    plot1 = fig.add_subplot(111)
-
-    plot1.plot(hourly_data["date"], hourly_data["wind_direction_180m"], label = "Direction (°)")
-
-    canvas = FigureCanvasTkAgg(fig, master = App)  
-    canvas.draw()
-    canvas.get_tk_widget().grid(row = 5, column = 3, pady = 10)
-
-    toolbar = NavigationToolbar2Tk(canvas, App, pack_toolbar = False)
-    toolbar.update()
-    canvas.get_tk_widget().grid(row = 5, column = 3, pady = 10)
-
-    plt.xlabel("By hours")
-    plt.ylabel("Wind Direction (°)")
-    plt.title("Wind Direction 180m")
-
-def uv_weather_graph():
-    fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
-
-    plot1 = fig.add_subplot(111)
-
-    plot1.plot(hourly_data["date"], hourly_data["uv_index"], label = "UV Index")
-
-    canvas = FigureCanvasTkAgg(fig, master = App)  
-    canvas.draw()
-    canvas.get_tk_widget().grid(row = 5, column = 3, pady = 10)
-
-    toolbar = NavigationToolbar2Tk(canvas, App, pack_toolbar = False)
-    toolbar.update()
-    canvas.get_tk_widget().grid(row = 5, colum = 3, pady = 10)
-
-    plt.xlabel("By days")
-    plt.ylabel("UV Index")
-    plt.title("UV Index Today")
-
-def humidity_weather_graph():
-    fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
-
-    plot1 = fig.add_subplot(111)
-
-    plot1.plot(hourly_data["date"], hourly_data["relative_humidity_2m"], label ="Humidity (%)")
-
-    canvas = FigureCanvasTkAgg(fig, master = App)  
-    canvas.draw()
-    canvas.get_tk_widget().grid(row = 5, column = 3, pady = 10)
-
-    toolbar = NavigationToolbar2Tk(canvas, App, pack_toolbar = False)
-    toolbar.update()
-    canvas.get_tk_widget().grid(row = 5, column = 3, pady = 10)
-    
-    plt.xlabel("By hours")
-    plt.ylabel("Relative Humidity (%)")
-    plt.title("Relative Humidity 2m")   
-
 # GUI - rework needed
 class App(ctk.CTk):
     def __init__(self):
@@ -123,18 +26,115 @@ class App(ctk.CTk):
         self.grid_rowconfigure((0,1,2,3,4,5), weight = 0)
 
         self.button_frame = ctk.CTkFrame(self)
-        self.button_frame.grid(row = 5, column = 0, padx = 10, pady = (20, 0), sticky = "ew" )
+        self.button_frame.grid(row = 5, column = 0, padx = 10, pady = (20, 0))
 
         self.display_frame = ctk.CTkFrame(self)
-        self.display_frame.grid(row = 0, column = 0, padx = 10, pady = (20, 0), sticky = "nw")
+        self.display_frame.grid(row = 0, column = 0, padx = 10, pady = (20, 0))
+        
+        # Weather Graphs - gui rework needed
+        def temp_weather_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+
+            plot1 = fig.add_subplot(111)
+    
+            plot1.plot(hourly_data["date"], hourly_data["temperature_2m"], label = "Temperature (°C)")
+
+            canvas = FigureCanvasTkAgg(fig, master = self.button_frame)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+
+            toolbar = NavigationToolbar2Tk(canvas, self.button_frame, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+
+            plt.xlabel("By hours")
+            plt.ylabel("Temperature (°C)")
+            plt.title("Temperature 2m")   
+
+        def wind_speed_weather_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(hourly_data["date"], hourly_data["wind_speed_180m"], label = "Wind Speed (m/s)")
+
+            canvas = FigureCanvasTkAgg(fig, master = self.button_frame)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+
+            toolbar = NavigationToolbar2Tk(canvas, self.button_frame, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+
+            plt.xlabel("By hours")
+            plt.ylabel("Wind Speed (m/s)")
+            plt.title("Wind Speed 180m")  
+
+        def wind_direction_weather_graph():
+
+            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(hourly_data["date"], hourly_data["wind_direction_180m"], label = "Direction (°)")
+
+            canvas = FigureCanvasTkAgg(fig, master = self.button_frame)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+
+            toolbar = NavigationToolbar2Tk(canvas, self.button_frame, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+
+            plt.xlabel("By hours")
+            plt.ylabel("Wind Direction (°)")
+            plt.title("Wind Direction 180m")
+
+        def uv_weather_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(hourly_data["date"], hourly_data["uv_index"], label = "UV Index")
+
+            canvas = FigureCanvasTkAgg(fig, master = self.button_frame)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+
+            toolbar = NavigationToolbar2Tk(canvas, self.button_frame, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+
+            plt.xlabel("By days")
+            plt.ylabel("UV Index")
+            plt.title("UV Index Today")
+
+        def humidity_weather_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(hourly_data["date"], hourly_data["relative_humidity_2m"], label ="Humidity (%)")
+
+            canvas = FigureCanvasTkAgg(fig, master = self.button_frame)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+
+            toolbar = NavigationToolbar2Tk(canvas, self.button_frame, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 5, column = 3, pady = 5)
+    
+            plt.xlabel("By hours")
+            plt.ylabel("Relative Humidity (%)")
+            plt.title("Relative Humidity 2m")   
 
         def day_detector():
             day_or_no = ""
         while current_is_day == 1.0:
-            day_or_no = "Day☀️"
+            day_or_no = "Day"
         else:
             current_is_day == 0.0
-            day_or_no = "Night🌙"
+            day_or_no = "Night"
 
         curtemp_text = f"{int(current_temp)}{' C'}"
         curhumidity_text = f"{int(current_humidity)}{' %'}"
