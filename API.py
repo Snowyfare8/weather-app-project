@@ -28,7 +28,9 @@ if "results" in geo_res:
         "latitude": lat,
         "longitude": lon,
         "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m", "uv_index"],
-        "current": ["temperature_2m", "relative_humidity_2m", "is_day", "wind_direction_10m", "wind_speed_10m", "apparent_temperature"],
+        "current": ["temperature_2m", "relative_humidity_2m", "is_day", "wind_direction_10m", "wind_speed_10m",
+                    "apparent_temperature", "rain", "precipitation", "showers", "snowfall",
+                    "weather_code", "cloud_cover", "pressure_msl", "surface_pressure", "dust" ],
 	    "timezone": "auto",
 	    "forecast_days": 1,
 	    "wind_speed_unit": "ms"
@@ -48,6 +50,15 @@ if "results" in geo_res:
     current_winddirection = current.Variables(3).Value()
     current_windspeed = current.Variables(4).Value()
     current_apptemp = current.Variables(5).Value()
+    current_rain = current.Variables(6).Value()
+    current_precipitation = current.Variables(7).Value()
+    current_showers = current.Variables(8).Value()
+    current_snowfall = current.Variables(9).Value()
+    current_weather_code = current.Variables(10).Value()
+    current_cloud_cover = current.Variables(11).Value()
+    current_pressure_msl = current.Variables(12).Value()
+    current_surfpressure = current.Variables(13).Value()
+    current_dust = current.Variables(14).Value()
 
     response = responses[0]
     hourly = response.Hourly()
@@ -80,3 +91,12 @@ if "results" in geo_res:
     print(f"Current wind_direction_10m: {current_winddirection}")
     print(f"Current wind_speed_10m: {current_windspeed}")
     print(f"Current apparent_temperature: {current_apptemp}")
+    print(f"Current rain: {current_rain}")
+    print(f"Current precipitation: {current_precipitation}")
+    print(f"Current showers {current_showers}")
+    print(f"Current snowfall {current_snowfall}")
+    print(f"Current weather code: {current_weather_code}")
+    print(f"Current cloud cover: {current_cloud_cover}")
+    print(f"Current sea level pressure {current_pressure_msl}")
+    print(f"Current surface pressure {current_surfpressure}")
+    print(f"Current dust level {current_dust}")
