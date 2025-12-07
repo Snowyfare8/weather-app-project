@@ -1,6 +1,6 @@
 # Weather App
 # API data imports
-from API import city, hourly_data, current_temp, current_humidity, current_is_day, current_winddirection, current_windspeed, current_apptemp, current_rain, current_precipitation, current_snowfall, current_showers, current_cloud_cover, current_pressure_msl, current_surfpressure, current_weather_code, current_dust
+from weatherapi import city, hourly_data, current_temp, current_humidity, current_is_day, current_winddirection, current_windspeed, current_apptemp, current_rain, current_precipitation, current_snowfall, current_showers, current_cloud_cover, current_pressure_msl, current_surfpressure, current_weather_code, current_dust
 
 # Graphing imports
 import numpy as np
@@ -233,4 +233,5 @@ class App(ctk.CTk):
 
         
 app = App()
+
 app.mainloop()
