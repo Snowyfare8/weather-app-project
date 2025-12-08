@@ -1,4 +1,4 @@
-# API Prototype
+# Weather API
 import openmeteo_requests
 import geocoder
 import pandas as pd
@@ -18,11 +18,12 @@ cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
 retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
 openmeteo = openmeteo_requests.Client(session = retry_session)
 
-# API 2 - rework maybe needed           
+# Weather API - rework maybe needed           
 if "results" in geo_res:
     lat = geo_res["results"][0]["latitude"]
     lon = geo_res["results"][0]["longitude"]
 
+    # Forecast subAPI
     url = "https://api.open-meteo.com/v1/forecast"
     params = {
         "latitude": lat,
@@ -30,7 +31,7 @@ if "results" in geo_res:
         "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m", "uv_index"],
         "current": ["temperature_2m", "relative_humidity_2m", "is_day", "wind_direction_10m", "wind_speed_10m",
                     "apparent_temperature", "rain", "precipitation", "showers", "snowfall",
-                    "weather_code", "cloud_cover", "pressure_msl", "surface_pressure", "dust"],
+                    "weather_code", "cloud_cover", "pressure_msl", "surface_pressure"],
         "minutely_15": ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "wind_speed_80m", "wind_direction_80m", "is_day"],
 	    "timezone": "auto",
 	    "forecast_days": 1,
@@ -40,10 +41,6 @@ if "results" in geo_res:
     responses = openmeteo.weather_api(url, params=params)
 
     response = responses[0]
-   # print(f"Coordinates: {response.Latitude()}°N {response.Longitude()}°E")
-   # print(f"Elevation: {response.Elevation()} m asl")
-   # print(f"Timezone: {response.Timezone()}{response.TimezoneAbbreviation()}")
-   # print(f"Timezone difference to GMT+0: {response.UtcOffsetSeconds()}s")
 
     minutely_15 = response.Minutely15()
     minutely_15_temp = minutely_15.Variables(0).ValuesAsNumpy()
@@ -82,7 +79,6 @@ if "results" in geo_res:
     current_cloud_cover = current.Variables(11).Value()
     current_pressure_msl = current.Variables(12).Value()
     current_surfpressure = current.Variables(13).Value()
-    current_dust = current.Variables(14).Value()
 
     response = responses[0]
     hourly = response.Hourly()
@@ -106,24 +102,5 @@ if "results" in geo_res:
     hourly_data["uv_index"] = hourly_uvindex
 
     hourly_dataframe = pd.DataFrame(data = hourly_data)
-   # print("\nHourly data\n", hourly_dataframe)
 
     minutely_15_dataframe = pd.DataFrame(data = minutely_15_data)
-   # print("\nMinutely15 data\n", minutely_15_dataframe)
-
-   # print(f"\nCurrent time: {current.Time()}")
-   # print(f"Current temperature_2m: {current_temp}")
-   # print(f"Current relative_humidity_2m: {current_humidity}")
-   # print(f"Current is_day: {current_is_day}")
-   # print(f"Current wind_direction_10m: {current_winddirection}")
-   # print(f"Current wind_speed_10m: {current_windspeed}")
-   # print(f"Current apparent_temperature: {current_apptemp}")
-   # print(f"Current rain: {current_rain}")
-   # print(f"Current precipitation: {current_precipitation}")
-   # print(f"Current showers {current_showers}")
-   # print(f"Current snowfall {current_snowfall}")
-   # print(f"Current weather code: {current_weather_code}")
-   # print(f"Current cloud cover: {current_cloud_cover}")
-   # print(f"Current sea level pressure {current_pressure_msl}")
-   # print(f"Current surface pressure {current_surfpressure}")
-   # print(f"Current dust level {current_dust}")
