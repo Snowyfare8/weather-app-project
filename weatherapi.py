@@ -31,7 +31,7 @@ if "results" in geo_res:
         "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m", "uv_index"],
         "current": ["temperature_2m", "relative_humidity_2m", "is_day", "wind_direction_10m", "wind_speed_10m",
                     "apparent_temperature", "rain", "precipitation", "showers", "snowfall",
-                    "weather_code", "cloud_cover", "pressure_msl", "surface_pressure", "dust", "european_aqi"],
+                    "weather_code", "cloud_cover", "pressure_msl", "surface_pressure"],
         "minutely_15": ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "wind_speed_80m", "wind_direction_80m", "is_day"],
 	    "timezone": "auto",
 	    "forecast_days": 1,
@@ -104,3 +104,4 @@ if "results" in geo_res:
     hourly_dataframe = pd.DataFrame(data = hourly_data)
 
     minutely_15_dataframe = pd.DataFrame(data = minutely_15_data)
+
