@@ -285,21 +285,19 @@ class App(ctk.CTk):
         self.master_frame = MasterFrame(master = self, height = 800, width = 800, corner_radius = 0, fg_color = "transparent")
         self.master_frame.grid(row = 0, column = 0, sticky = "nsew")
 
-      #  self.bg_image = ctk.CTkImage(dark_image = Image.open("clear_sunny_day.jpeg"), size=(30, 30))
-
-      #  def dynamic_background():
-      #      if current_is_day == 1 and current_cloud_cover <= 50 and current_precipitation <= 1:
-      #          self.bg_image = ctk.CTkImage(dark_image = Image.open(r"C:\Users\Az\Python Weather Application\clear_sunny_day.jpg"), size = (30, 30))
-      #          return self.bg_image
-      #      elif current_is_day == 0 and current_cloud_cover <= 50 and current_precipitation <= 1:
-      #          self.bg_image = ctk.CTkImage(dark_image = Image.open(r"C:\Users\Az\Python Weather Application\clear_cool_night.jpg"), size = (30, 30))
-      #          return self.bg_image
-      #      elif current_is_day == 1 and current_cloud_cover >= 50 and current_precipitation <= 1:
-      #          self.bg_image = ctk.CTkImage(dark_image = Image.open(r"C:\Users\Az\Python Weather Application\mildly_cloudy_day.jpg"), size = (30, 30))
-      #          return self.bg_image
+        def dynamic_background():
+            if current_is_day == 1 and current_cloud_cover <= 50 and current_precipitation <= 1:
+                self.bg_image = ctk.CTkImage(dark_image = Image.open(r"C:\Users\Az\Python Weather Application\clear_sunny_day.jpg"), size = (30, 30))
+                return self.bg_image
+            elif current_is_day == 0 and current_cloud_cover <= 50 and current_precipitation <= 1:
+                self.bg_image = ctk.CTkImage(dark_image = Image.open(r"C:\Users\Az\Python Weather Application\clear_cool_night.jpg"), size = (30, 30))
+                return self.bg_image
+            elif current_is_day == 1 and current_cloud_cover >= 50 and current_precipitation <= 1:
+                self.bg_image = ctk.CTkImage(dark_image = Image.open(r"C:\Users\Az\Python Weather Application\mildly_cloudy_day.jpg"), size = (30, 30))
+                return self.bg_image
         
-      #  self.background_image = ctk.CTkLabel(self.master_frame, height = 800, width = 800, image = self.bg_image)
-      #  self.background_image.grid(row = 0, column = 0, sticky = "nsew")
+        self.background_image = ctk.CTkLabel(self.master_frame, height = 800, width = 800, image = self.bg_image)
+        self.background_image.grid(row = 0, column = 0, sticky = "nsew")
 
         self.city_label = ctk.CTkLabel(self.master_frame, text = city, font = ("Normal", 22, "bold"))
         self.city_label.grid(row = 0, column = 0, padx = 20, pady = 20, sticky = "w")
@@ -319,7 +317,7 @@ class App(ctk.CTk):
         self.airqual_frame = AirQualityFrame(self.master_frame)
         self.airqual_frame.grid(row = 5, column = 0, padx = 10, pady = 10, sticky = "sw")
 
-      #  dynamic_background()
+        dynamic_background()
 
         
 app = App()
