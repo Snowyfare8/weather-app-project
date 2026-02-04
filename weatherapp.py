@@ -20,6 +20,10 @@ ctk.set_appearance_mode("system")
 ctk.set_default_color_theme("blue")
 
 # GUI - rework needed
+class MasterFrame(ctk.CTkScrollableFrame):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
 class SummaryFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
         super().__init__(MasterFrame, **kwargs)
@@ -131,7 +135,6 @@ class GraphFrame(ctk.CTkFrame):
         super().__init__(MasterFrame, **kwargs)
 
         def temp_weather_graph():
-            fig.clear()
             fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
 
             plot1 = fig.add_subplot(111)
@@ -151,7 +154,6 @@ class GraphFrame(ctk.CTkFrame):
             plt.title("Temperature 2m")    
 
         def wind_speed_weather_graph():
-            fig.clear()
             fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
 
             plot1 = fig.add_subplot(111)
@@ -171,7 +173,6 @@ class GraphFrame(ctk.CTkFrame):
             plt.title("Wind Speed 180m")
 
         def wind_direction_weather_graph():
-            fig.clear()
             fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
 
             plot1 = fig.add_subplot(111)
@@ -191,7 +192,6 @@ class GraphFrame(ctk.CTkFrame):
             plt.title("Wind Direction 180m")
 
         def uv_weather_graph():
-            fig.clear()
             fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
 
             plot1 = fig.add_subplot(111)
@@ -211,7 +211,6 @@ class GraphFrame(ctk.CTkFrame):
             plt.title("UV Index Today")
 
         def humidity_weather_graph():
-            fig.clear()
             fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
 
             plot1 = fig.add_subplot(111)
@@ -318,25 +317,28 @@ class App(ctk.CTk):
         self.grid_rowconfigure((0, 1, 2, 3, 4, 5), weight = 1)
         self.grid_columnconfigure((0, 1), weight = 1)
 
-        self.city_label = ctk.CTkLabel(self, text = city, font = ("Normal", 22, "bold"), fg_color = "transparent")
+        self.master_frame = MasterFrame(master = self, height = self.height, width = self.width)
+        self.master_frame.grid(row = 0, column = 0, sticky = "nsew")
+
+        self.city_label = ctk.CTkLabel(self.master_frame, text = city, font = ("Normal", 22, "bold"), fg_color = "transparent")
         self.city_label.grid(row = 0, column = 0, padx = 20, pady = (20, 10), sticky = "nw")
 
-        self.display_frame = SummaryFrame(self, border_color = "dark_color")
+        self.display_frame = SummaryFrame(self.master_frame, border_color = "dark_color")
         self.display_frame.grid(row = 1, column = 0, padx = 10, sticky = "nw")
 
-        self.graph_label = ctk.CTkLabel(self, text = "Hourly Weather", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.graph_label = ctk.CTkLabel(self.master_frame, text = "Hourly Weather", font = ("Normal", 20, "bold"), fg_color = "transparent")
         self.graph_label.grid(row = 2, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
-        self.button_frame = GraphFrame(self, border_color = "dark_color")
+        self.button_frame = GraphFrame(self.master_frame, border_color = "dark_color")
         self.button_frame.grid(row = 3, column = 0, padx = 20, sticky = "nw") 
 
-        self.airquality_label = ctk.CTkLabel(self, text = "Air Quality Details", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.airquality_label = ctk.CTkLabel(self.master_frame, text = "Air Quality Details", font = ("Normal", 20, "bold"), fg_color = "transparent")
         self.airquality_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
-        self.airquality_frame = AirQualityFrame(self, border_color = "dark_color")
+        self.airquality_frame = AirQualityFrame(self.master_frame, border_color = "dark_color")
         self.airquality_frame.grid(row = 5, column = 0, padx = 20, pady = (0, 200), sticky = "nw")
 
-        self.options_frame = OptionsSidebarFrame(self)
+        self.options_frame = OptionsSidebarFrame(self.master_frame, border_color = "dark_color")
         self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = 10, pady = 10, sticky = "nse")
 
         self.set_appearance_mode_menu = ctk.CTkOptionMenu(self.options_frame, values = ["System", "Light", "Dark"], command = self.change_appearance_mode)
