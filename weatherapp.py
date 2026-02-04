@@ -14,14 +14,12 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationTool
 import tkinter as tk
 import customtkinter as ctk
 from customtkinter import *
-import seaborn as sb
 import time as t
 
-# GUI - rework needed
-class MasterFrame(ctk.CTkScrollableFrame):
-    def __init__(self, master, **kwargs):
-        super().__init__(master, **kwargs)
+ctk.set_appearance_mode("system")
+ctk.set_default_color_theme("blue")
 
+# GUI - rework needed
 class SummaryFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
         super().__init__(MasterFrame, **kwargs)
@@ -57,49 +55,70 @@ class SummaryFrame(ctk.CTkFrame):
 
             self.curweather = ctk.CTkLabel(self, text = "Current weather")
             self.current_temperature = ctk.CTkLabel(self, text = daylight_var + curtemp_text, font = ("Normal", 25, "normal"))
+
             self.humidity_text = ctk.CTkLabel(self, text  = "Humidity")
             self.current_humidity = ctk.CTkLabel(self, text = curhumidity_text)
+
             self.winddirection_text = ctk.CTkLabel(self, text  = "Wind Direction")
             self.current_winddirection = ctk.CTkLabel(self, text = curwinddir_text)
+
             self.windspeed_text = ctk.CTkLabel(self, text  = "Wind Speed")
             self.current_windspeed = ctk.CTkLabel(self, text = curwindspeed_text)
+
             self.precip_text = ctk.CTkLabel(self, text = "Precipitation")
             self.current_precip = ctk.CTkLabel(self, text = curprecip_text)
+
             self.pressuresl_text = ctk.CTkLabel(self, text = "Sea Level Pressure")
             self.current_pressuresl = ctk.CTkLabel(self, text = curpressuresl_text)
+
             self.pressuresurf_text = ctk.CTkLabel(self, text = "Surface Pressure")
             self.current_pressuresurf = ctk.CTkLabel(self, text = curpressuresurf_text)
+
             self.current_apptemp = ctk.CTkLabel(self, text = curapptemp_text)
+
             self.cloudcover_text = ctk.CTkLabel(self, text = "Cloud Cover")
             self.current_cloudcover = ctk.CTkLabel(self, text = curcloudcover_text)
+
             self.dust_text = ctk.CTkLabel(self, text = "Dustiness")
             self.current_dust = ctk.CTkLabel(self, text = curdust_text)
+
             self.aqi_text = ctk.CTkLabel(self, text = "Air Quality")
             self.current_aqi = ctk.CTkLabel(self, text = curaqi_text)
+
             self.aqi_grade = ctk.CTkLabel(self, text = euaqi_grade_func(current_euroaqi))
 
-            self.curweather.grid(row = 0, column = 0, padx = 10, pady = 5)
-            self.current_temperature.grid(row = 1, column = 0, padx = 0, pady = 10)
-            self.humidity_text.grid(row = 2, column = 1, padx = 10, pady = 0, sticky = "s")
-            self.current_humidity.grid(row = 3, column = 1, padx = 10, pady = 2)  
-            self.winddirection_text.grid(row = 0, column = 2, padx = 10, pady = 0, sticky = "s")
-            self.current_winddirection.grid(row = 1, column = 2, padx = 10, pady = 2)
-            self.windspeed_text.grid(row = 2, column = 2, padx = 10, pady = 0, sticky = "s")
-            self.current_windspeed.grid(row = 3, column = 2, padx = 10, pady = 2)
-            self.precip_text.grid(row = 2, column = 4, padx = 10, pady = 0, sticky = "s")
-            self.current_precip.grid(row = 3, column = 4, padx = 10, pady = 2)
-            self.pressuresl_text.grid(row = 2, column = 5, padx = 10, pady = 0, sticky = "s")
-            self.current_pressuresl.grid(row = 3, column = 5, padx = 10, pady = 2)
-            self.pressuresurf_text.grid(row = 0, column = 5, padx = 10, pady = 0, sticky = "s")
-            self.current_pressuresurf.grid(row = 1, column = 5, padx = 10, pady = 2)
-            self.current_apptemp.grid(row = 3, column = 0, padx = 10, pady = 2)
-            self.cloudcover_text.grid(row = 0, column = 1, padx = 10, pady = 0, sticky = "s")
-            self.current_cloudcover.grid(row = 1, column = 1, padx = 10, pady = 2)
-            self.dust_text.grid(row = 0, column = 6, padx = 10, pady = 0, sticky = "s")
-            self.current_dust.grid(row = 1, column = 6, padx = 10, pady = 2)
-            self.aqi_text.grid(row = 2, column = 6, padx = 10, pady = 0, sticky = "s")
-            self.current_aqi.grid(row = 3, column = 6, padx = 10, pady = 2)
-            self.aqi_grade.grid(row = 4, column = 6, padx = 10, pady = 2)
+            self.curweather.grid(row = 0, column = 0, padx = 15, pady = 5)
+            self.current_temperature.grid(row = 1, column = 0, padx = 15, pady = 10)
+
+            self.humidity_text.grid(row = 2, column = 1, padx = 15, pady = 0, sticky = "s")
+            self.current_humidity.grid(row = 3, column = 1, padx = 15, pady = 2)  
+
+            self.winddirection_text.grid(row = 0, column = 2, padx = 15, pady = 0, sticky = "s")
+            self.current_winddirection.grid(row = 1, column = 2, padx = 15, pady = 2)
+
+            self.windspeed_text.grid(row = 2, column = 2, padx = 15, pady = 0, sticky = "s")
+            self.current_windspeed.grid(row = 3, column = 2, padx = 15, pady = 2)
+
+            self.precip_text.grid(row = 0, column = 4, padx = 15, pady = 0, sticky = "s")
+            self.current_precip.grid(row = 1, column = 4, padx = 15, pady = 2)
+
+            self.pressuresl_text.grid(row = 2, column = 5, padx = 15, pady = 0, sticky = "s")
+            self.current_pressuresl.grid(row = 3, column = 5, padx = 15, pady = 2)
+
+            self.pressuresurf_text.grid(row = 0, column = 5, padx = 15, pady = 0, sticky = "s")
+            self.current_pressuresurf.grid(row = 1, column = 5, padx = 15, pady = 2)
+
+            self.current_apptemp.grid(row = 3, column = 0, padx = 15, pady = 2)
+            self.cloudcover_text.grid(row = 0, column = 1, padx = 15, pady = 0, sticky = "s")
+
+            self.current_cloudcover.grid(row = 1, column = 1, padx = 15, pady = 2)
+            self.dust_text.grid(row = 0, column = 6, padx = 15, pady = 0, sticky = "s")
+
+            self.current_dust.grid(row = 1, column = 6, padx = 15, pady = 2)
+            self.aqi_text.grid(row = 2, column = 6, padx = 15, pady = 0, sticky = "s")
+
+            self.current_aqi.grid(row = 3, column = 6, padx = 15, pady = 2)
+            self.aqi_grade.grid(row = 4, column = 6, padx = 15, pady = 2)
 
             self.update_idletasks()
             t.sleep(2)
@@ -110,7 +129,6 @@ class SummaryFrame(ctk.CTkFrame):
 class GraphFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
         super().__init__(MasterFrame, **kwargs)
-
 
         def temp_weather_graph():
             fig.clear()
@@ -273,52 +291,70 @@ class AirQualityFrame(ctk.CTkFrame):
        
         air_quality_display(self)
 
+class OptionsSidebarFrame(ctk.CTkFrame):
+    def __init__(self, MasterFrame, **kwargs):
+        super().__init__(MasterFrame, **kwargs)
+
+        self.settings_label = ctk.CTkLabel(self, text = "GUI Settings")
+
+        self.settings_label.grid(row = 0, column = 0, padx = 20, pady = 10)
+
+        self.set_appearance_mode_label = ctk.CTkLabel(self, text = "UI Color Mode")
+        self.set_appearance_mode_label.grid(row = 1, column = 0, padx = 20, pady = (10, 2))
+
+        self.set_ui_scaling_label = ctk.CTkLabel(self, text = "UI Rescaling")
+        self.set_ui_scaling_label.grid(row = 3, column = 0, padx = 20, pady = (10, 2))
+
 class App(ctk.CTk):
+    width = 910
+    height = 800
+
     def __init__(self):
         super().__init__()
 
         self.title("Python Weather App")
+        self.resizable(True, True)
 
-        self.grid_rowconfigure(0, weight = 1)
-        self.grid_columnconfigure(0, weight = 1)
+        self.grid_rowconfigure((0, 1, 2, 3, 4, 5), weight = 1)
+        self.grid_columnconfigure((0, 1), weight = 1)
 
-        self.master_frame = MasterFrame(master = self, height = 800, width = 800, corner_radius = 0, fg_color = "transparent")
-        self.master_frame.grid(row = 0, column = 0, sticky = "nsew")
+        self.city_label = ctk.CTkLabel(self, text = city, font = ("Normal", 22, "bold"), fg_color = "transparent")
+        self.city_label.grid(row = 0, column = 0, padx = 20, pady = (20, 10), sticky = "nw")
 
-        def dynamic_background():
-            if current_is_day == 1 and current_cloud_cover <= 50 and current_precipitation <= 1:
-                self.bg_image = ctk.CTkImage(dark_image = Image.open(r"C:\Users\Az\Python Weather Application\clear_sunny_day.jpg"), size = (30, 30))
-                return self.bg_image
-            elif current_is_day == 0 and current_cloud_cover <= 50 and current_precipitation <= 1:
-                self.bg_image = ctk.CTkImage(dark_image = Image.open(r"C:\Users\Az\Python Weather Application\clear_cool_night.jpg"), size = (30, 30))
-                return self.bg_image
-            elif current_is_day == 1 and current_cloud_cover >= 50 and current_precipitation <= 1:
-                self.bg_image = ctk.CTkImage(dark_image = Image.open(r"C:\Users\Az\Python Weather Application\mildly_cloudy_day.jpg"), size = (30, 30))
-                return self.bg_image
-        
-        self.background_image = ctk.CTkLabel(self.master_frame, height = 800, width = 800, image = self.bg_image)
-        self.background_image.grid(row = 0, column = 0, sticky = "nsew")
+        self.display_frame = SummaryFrame(self, border_color = "dark_color")
+        self.display_frame.grid(row = 1, column = 0, padx = 10, sticky = "nw")
 
-        self.city_label = ctk.CTkLabel(self.master_frame, text = city, font = ("Normal", 22, "bold"))
-        self.city_label.grid(row = 0, column = 0, padx = 20, pady = 20, sticky = "w")
+        self.graph_label = ctk.CTkLabel(self, text = "Hourly Weather", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.graph_label.grid(row = 2, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
-        self.display_frame = SummaryFrame(self.master_frame)
-        self.display_frame.grid(row = 1, column = 0, padx = 10, pady = 10, sticky = "w")
+        self.button_frame = GraphFrame(self, border_color = "dark_color")
+        self.button_frame.grid(row = 3, column = 0, padx = 20, sticky = "nw") 
 
-        self.graph_text = ctk.CTkLabel(self.master_frame, text = "Hourly Weather", font = ("Normal", 20, "bold"))
-        self.graph_text.grid(row = 2, column = 0, padx = 20, pady = 10, sticky = "sw")
+        self.airquality_label = ctk.CTkLabel(self, text = "Air Quality Details", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.airquality_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
-        self.button_frame = GraphFrame(self.master_frame)
-        self.button_frame.grid(row = 3, column = 0, padx = 10, pady = 20, sticky = "sw")
+        self.airquality_frame = AirQualityFrame(self, border_color = "dark_color")
+        self.airquality_frame.grid(row = 5, column = 0, padx = 20, pady = (0, 200), sticky = "nw")
 
-        self.airqual_text = ctk.CTkLabel(self.master_frame, text = "Air Quality Details", font = ("Normal", 20, "bold"))
-        self.airqual_text.grid(row = 4, column = 0, padx = 20, pady = 10, sticky = "sw")
+        self.options_frame = OptionsSidebarFrame(self)
+        self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = 10, pady = 10, sticky = "nse")
 
-        self.airqual_frame = AirQualityFrame(self.master_frame)
-        self.airqual_frame.grid(row = 5, column = 0, padx = 10, pady = 10, sticky = "sw")
+        self.set_appearance_mode_menu = ctk.CTkOptionMenu(self.options_frame, values = ["System", "Light", "Dark"], command = self.change_appearance_mode)
+        self.set_ui_scaling = ctk.CTkOptionMenu(self.options_frame, values = ["80%", "90%", "100%", "110%", "120%"], command = self.change_ui_scaling)
 
-        dynamic_background()
+        self.set_appearance_mode_menu.grid(row = 2, column = 0, padx = 20, pady = (0, 20))
+        self.set_ui_scaling.grid(row = 4, column = 0, padx = 20, pady = 0)
 
-        
-app = App()
-app.mainloop()
+        self.set_ui_scaling.set("100%")
+
+    def change_appearance_mode(self, new_appearance_mode: str):
+        ctk.set_appearance_mode(new_appearance_mode)
+         
+    def change_ui_scaling(self, new_ui_scaling: str):
+        new_scaling_float = int(new_ui_scaling.replace("%", "")) / 100
+        ctk.set_widget_scaling(new_scaling_float)
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
+
