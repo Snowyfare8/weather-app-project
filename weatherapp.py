@@ -141,9 +141,10 @@ class GraphFrame(ctk.CTkFrame):
         super().__init__(MasterFrame, **kwargs)
 
         # fix restarting bug that occurs when graph is activated
-        # improve graph readability
+        # improved graph readability, added 
+        # fixed button scaling bug
         def temp_weather_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+            fig = Figure(figsize = (10, 5), facecolor ="#454545", dpi = 100 )
 
             plot1 = fig.add_subplot(111)
 
@@ -151,18 +152,18 @@ class GraphFrame(ctk.CTkFrame):
 
             canvas = FigureCanvasTkAgg(fig, master = self)  
             canvas.draw()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
 
             toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
             toolbar.update()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
 
-            plt.xlabel("By hours")
-            plt.ylabel("Temperature (°C)")
-            plt.title("Temperature 2m")    
+            plot1.set_xlabel("By hours (x-axis)")
+            plot1.set_ylabel("Temperature (°C) (y-axis)")
+            plot1.set_title("Temperature 2m")    
 
         def wind_speed_weather_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+            fig = Figure(figsize = (10, 5), facecolor ="#454545", dpi = 100 )
 
             plot1 = fig.add_subplot(111)
 
@@ -170,18 +171,18 @@ class GraphFrame(ctk.CTkFrame):
 
             canvas = FigureCanvasTkAgg(fig, master = self)  
             canvas.draw()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
 
             toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
             toolbar.update()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
 
-            plt.xlabel("By hours")
-            plt.ylabel("Wind Speed (m/s)")
-            plt.title("Wind Speed 180m")
+            plot1.set_xlabel("By hours (x-axis)")
+            plot1.set_ylabel("Wind Speed (m/s) (y-axis)")
+            plot1.set_title("Wind Speed 180m")
 
         def wind_direction_weather_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+            fig = Figure(figsize = (10, 5), facecolor ="#454545", dpi = 100 )
 
             plot1 = fig.add_subplot(111)
 
@@ -189,18 +190,18 @@ class GraphFrame(ctk.CTkFrame):
 
             canvas = FigureCanvasTkAgg(fig, master = self)  
             canvas.draw()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
 
             toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
             toolbar.update()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
 
-            plt.xlabel("By hours")
-            plt.ylabel("Wind Direction (°)")
-            plt.title("Wind Direction 180m")
+            plot1.set_xlabel("By hours (x-axis)")
+            plot1.set_ylabel("Wind Direction (°) (y-axis)")
+            plot1.set_title("Wind Direction 180m")
 
         def uv_weather_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+            fig = Figure(figsize = (10, 5), facecolor ="#454545", dpi = 100 )
 
             plot1 = fig.add_subplot(111)
 
@@ -208,18 +209,18 @@ class GraphFrame(ctk.CTkFrame):
 
             canvas = FigureCanvasTkAgg(fig, master = self)  
             canvas.draw()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
 
             toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
             toolbar.update()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
 
-            plt.xlabel("By days")
-            plt.ylabel("UV Index")
-            plt.title("UV Index Today")
+            plot1.set_xlabel("By days (x-axis)")
+            plot1.set_ylabel("UV Index (y-axis)")
+            plot1.set_title("UV Index Today")
 
         def humidity_weather_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
+            fig = Figure(figsize = (10, 5), facecolor ="#454545", dpi = 100 )
 
             plot1 = fig.add_subplot(111)
 
@@ -227,15 +228,15 @@ class GraphFrame(ctk.CTkFrame):
 
             canvas = FigureCanvasTkAgg(fig, master = self)  
             canvas.draw()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
 
             toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
             toolbar.update()
-            canvas.get_tk_widget().grid(row = 2, column = 0, padx = 5, pady = 5, sticky = "w")
+            canvas.get_tk_widget().grid(row = 2, column = 0, columnspan = 5, padx = 5, pady = 5, sticky = "w")
     
-            plt.xlabel("By hours")
-            plt.ylabel("Relative Humidity (%)")
-            plt.title("Relative Humidity 2m")  
+            plot1.set_xlabel("By hours (x-axis)")
+            plot1.set_ylabel("Relative Humidity (%) (y-axis)")
+            plot1.set_title("Relative Humidity 2m")  
 
         self.temp_button = ctk.CTkButton(self, text = "Temperature", border_color = "#FFFFFF", command = temp_weather_graph)
         self.windspeed_button = ctk.CTkButton(self, text = "Wind Speed", border_color = "#FFFFFF", command = wind_speed_weather_graph)
@@ -327,7 +328,7 @@ class App(ctk.CTk):
         self.grid_columnconfigure((0, 1, 2), weight = 1)
 
         # fix rescaling issue
-        self.master_frame = MasterFrame(master = self, height = self.height, width = self.width, fg_color = "transparent")
+        self.master_frame = MasterFrame(master = self, height = self.height, width = self.width, corner_radius = 0, fg_color = "transparent")
         self.master_frame.grid(row = 0, column = 0, sticky = "nsew")
 
         self.city_label = ctk.CTkLabel(self.master_frame, text = city, font = ("Normal", 22, "bold"), fg_color = "transparent")
