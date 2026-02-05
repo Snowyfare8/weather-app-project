@@ -51,8 +51,8 @@ if "results" in geo_res:
     minutely_15_is_day = minutely_15.Variables(5).ValuesAsNumpy()
 
     minutely_15_data = {"date": pd.date_range(
-	    start = pd.to_datetime(minutely_15.Time(), unit = "s", utc = True),
-	    end =  pd.to_datetime(minutely_15.TimeEnd(), unit = "s", utc = True),
+	    start = pd.to_datetime(minutely_15.Time() + response.UtcOffsetSeconds(), unit = "s", utc = True),
+	    end =  pd.to_datetime(minutely_15.TimeEnd() + response.UtcOffsetSeconds(), unit = "s", utc = True),
 	    freq = pd.Timedelta(seconds = minutely_15.Interval()),
 	    inclusive = "left"
     )}
@@ -89,10 +89,10 @@ if "results" in geo_res:
     hourly_uvindex = hourly.Variables(4).ValuesAsNumpy()
 
     hourly_data = {"date": pd.date_range(
-        start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
-        end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True),
+        start = pd.to_datetime(hourly.Time() + response.UtcOffsetSeconds(), unit = "s", utc = True),
+        end = pd.to_datetime(hourly.TimeEnd() + response.UtcOffsetSeconds(), unit = "s", utc = True),
         freq = pd.Timedelta(seconds = hourly.Interval()),
-        inclusive = "left"
+        inclusive = "right"
     )}
 
     hourly_data["temperature_2m"] = hourly_temp
@@ -104,4 +104,3 @@ if "results" in geo_res:
     hourly_dataframe = pd.DataFrame(data = hourly_data)
 
     minutely_15_dataframe = pd.DataFrame(data = minutely_15_data)
-
