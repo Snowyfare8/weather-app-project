@@ -2,7 +2,10 @@
 # API data imports
 from weatherapi import *
 from airqualityapi import *
+
+# Imaging imports
 from PIL import Image
+
 # Graphing imports
 import numpy as np
 import matplotlib as mpl
@@ -20,6 +23,8 @@ ctk.set_appearance_mode("system")
 ctk.set_default_color_theme("blue")
 
 # GUI - rework needed
+
+# fix scrollable frame rescaling issues
 class MasterFrame(ctk.CTkScrollableFrame):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -129,11 +134,14 @@ class SummaryFrame(ctk.CTkFrame):
 
         euaqi_grade_func(current_euroaqi)
         summary_display(self)
-    
+
+# fix and improve graphs
 class GraphFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
         super().__init__(MasterFrame, **kwargs)
 
+        # fix restarting bug that occurs when graph is activated
+        # improve graph readability
         def temp_weather_graph():
             fig = Figure(figsize = (10, 5), facecolor ="#7A7A7A")
 
@@ -305,19 +313,21 @@ class OptionsSidebarFrame(ctk.CTkFrame):
         self.set_ui_scaling_label.grid(row = 3, column = 0, padx = 20, pady = (10, 2))
 
 class App(ctk.CTk):
-    width = 910
+    width = 980
     height = 800
 
     def __init__(self):
         super().__init__()
 
         self.title("Python Weather App")
+        self.geometry(f"{self.width}x{self.height}")
         self.resizable(True, True)
 
         self.grid_rowconfigure((0, 1, 2, 3, 4, 5), weight = 1)
-        self.grid_columnconfigure((0, 1), weight = 1)
+        self.grid_columnconfigure((0, 1, 2), weight = 1)
 
-        self.master_frame = MasterFrame(master = self, height = self.height, width = self.width)
+        # fix rescaling issue
+        self.master_frame = MasterFrame(master = self, height = self.height, width = self.width, fg_color = "transparent")
         self.master_frame.grid(row = 0, column = 0, sticky = "nsew")
 
         self.city_label = ctk.CTkLabel(self.master_frame, text = city, font = ("Normal", 22, "bold"), fg_color = "transparent")
@@ -339,7 +349,7 @@ class App(ctk.CTk):
         self.airquality_frame.grid(row = 5, column = 0, padx = 20, pady = (0, 200), sticky = "nw")
 
         self.options_frame = OptionsSidebarFrame(self.master_frame, border_color = "dark_color")
-        self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = 10, pady = 10, sticky = "nse")
+        self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = (20, 0), pady = 10, sticky = "ns")
 
         self.set_appearance_mode_menu = ctk.CTkOptionMenu(self.options_frame, values = ["System", "Light", "Dark"], command = self.change_appearance_mode)
         self.set_ui_scaling = ctk.CTkOptionMenu(self.options_frame, values = ["80%", "90%", "100%", "110%", "120%"], command = self.change_ui_scaling)
