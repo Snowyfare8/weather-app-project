@@ -135,14 +135,10 @@ class SummaryFrame(ctk.CTkFrame):
         euaqi_grade_func(current_euroaqi)
         summary_display(self)
 
-# fix and improve graphs
 class GraphFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
         super().__init__(MasterFrame, **kwargs)
 
-        # fix restarting bug that occurs when graph is activated
-        # improved graph readability, added 
-        # fixed button scaling bug
         def temp_weather_graph():
             fig = Figure(figsize = (10, 5), facecolor ="#454545", dpi = 100 )
 
