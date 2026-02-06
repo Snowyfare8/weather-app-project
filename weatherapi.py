@@ -30,8 +30,7 @@ if "results" in geo_res:
         "longitude": lon,
         "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m", "uv_index", "precipitation"],
         "current": ["temperature_2m", "relative_humidity_2m", "is_day", "wind_direction_10m", "wind_speed_10m",
-                    "apparent_temperature", "rain", "precipitation", "showers", "snowfall",
-                    "weather_code", "cloud_cover", "pressure_msl", "surface_pressure"],
+                    "apparent_temperature", "precipitation", "cloud_cover", "pressure_msl", "surface_pressure"],
         "minutely_15": ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "wind_speed_80m", "wind_direction_80m", "precipitation"],
 	    "timezone": "auto",
 	    "forecast_days": 1,
@@ -71,14 +70,10 @@ if "results" in geo_res:
     current_winddirection = current.Variables(3).Value()
     current_windspeed = current.Variables(4).Value()
     current_apptemp = current.Variables(5).Value()
-    current_rain = current.Variables(6).Value()
-    current_precipitation = current.Variables(7).Value()
-    current_showers = current.Variables(8).Value()
-    current_snowfall = current.Variables(9).Value()
-    current_weather_code = current.Variables(10).Value()
-    current_cloud_cover = current.Variables(11).Value()
-    current_pressure_msl = current.Variables(12).Value()
-    current_surfpressure = current.Variables(13).Value()
+    current_precipitation = current.Variables(6).Value()
+    current_cloud_cover = current.Variables(7).Value()
+    current_pressure_msl = current.Variables(8).Value()
+    current_surfpressure = current.Variables(9).Value()
 
     response = responses[0]
     hourly = response.Hourly()
@@ -106,3 +101,5 @@ if "results" in geo_res:
     hourly_dataframe = pd.DataFrame(data = hourly_data)
 
     minutely_15_dataframe = pd.DataFrame(data = minutely_15_data)
+
+    print(f"Current precipitation: {current_precipitation}")
