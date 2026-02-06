@@ -129,9 +129,6 @@ class SummaryFrame(ctk.CTkFrame):
             self.current_aqi.grid(row = 3, column = 6, padx = 15, pady = 2)
             self.aqi_grade.grid(row = 4, column = 6, padx = 15, pady = 2)
 
-            self.update_idletasks()
-            t.sleep(2)
-
         euaqi_grade_func(current_euroaqi)
         summary_display(self)
 
@@ -274,6 +271,8 @@ class HourlyGraphFrame(ctk.CTkFrame):
         self.humidity_hourly_button.grid(row = 0, column = 4, padx = 10, pady = 20, sticky = "nsew")
         self.precipitation_hourly_button.grid (row = 0, column = 5, padx = 10, pady = 20, sticky = "nsew") 
 
+        temp_hourly_graph()
+
 class AirQualityFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
         super().__init__(MasterFrame, **kwargs)
@@ -321,9 +320,6 @@ class AirQualityFrame(ctk.CTkFrame):
 
             self.o3_text.grid(row = 0, column = 5, padx = 10, pady = 5)
             self.current_o3.grid(row = 1, column = 5, padx = 10, pady = 5)
-
-            self.update_idletasks()
-            t.sleep(2)
        
         air_quality_display(self)
 
@@ -426,12 +422,12 @@ class MinutelyGraphFrame(ctk.CTkFrame):
             plot1.set_ylabel("Wind Direction (°) (y-axis)")
             plot1.set_title("Wind Direction 80m")   
 
-        def is_day_minutely_graph():
+        def precipitation_minutely_graph():
             fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
 
             plot1 = fig.add_subplot(111)
 
-            plot1.plot(minutely_15_data["date"], minutely_15_data["is_day"], label = "Day-Night Cycle")
+            plot1.plot(minutely_15_data["date"], minutely_15_data["precipitation"], label = "Precipitation (mm)")
 
             canvas = FigureCanvasTkAgg(fig, master = self)  
             canvas.draw()
@@ -442,29 +438,31 @@ class MinutelyGraphFrame(ctk.CTkFrame):
             canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
 
             plot1.set_xlabel("By minutes (x-axis)")
-            plot1.set_ylabel("Day-Night (y-axis)")
-            plot1.set_title("Day-Night Cycle")
+            plot1.set_ylabel("Precipitation (mm) (y-axis)")
+            plot1.set_title("Precipitation (Rain, snow, and/or hail)")
 
         self.temp_minutely_button = ctk.CTkButton(self, text = "Temperature", border_color = "#FFFFFF", command = temp_minutely_graph )
         self.humidity_minutely_button = ctk.CTkButton(self, text = "Humidity", border_color = "#FFFFFF", command = humidity_minutely_graph )
         self.apparent_temp_minutely_button = ctk.CTkButton(self, text = "Apparent Temperature", border_color = "#FFFFFF", command = apparent_temp_minutely_graph )
         self.wind_speed_minutely_button = ctk.CTkButton(self, text = "Wind Speed", border_color = "#FFFFFF", command = wind_speed_minutely_graph )
         self.wind_direction_minutely_button = ctk.CTkButton(self, text = "Wind Direction", border_color = "#FFFFFF", command = wind_direction_minutely_graph )
-        self.is_day_minutely_button = ctk.CTkButton(self, text = "Day-Night Cycle", border_color = "#FFFFFF", command = is_day_minutely_graph )
+        self.precipitation_minutely_button = ctk.CTkButton(self, text = "Precipitation", border_color = "#FFFFFF", command = precipitation_minutely_graph )
 
         self.temp_minutely_button.configure(height = 5, width = 15)
         self.humidity_minutely_button.configure(height = 5, width = 15)
         self.apparent_temp_minutely_button.configure(height = 5, width = 15)
         self.wind_speed_minutely_button.configure(height = 5, width = 15) 
         self.wind_direction_minutely_button.configure(height = 5, width = 15)
-        self.is_day_minutely_button.configure(height = 5, width = 15)
+        self.precipitation_minutely_button.configure(height = 5, width = 15)
 
         self.temp_minutely_button.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = "nsew")
         self.humidity_minutely_button.grid(row = 0, column = 1, padx = 10, pady = 20, sticky = "nsew")
         self.apparent_temp_minutely_button.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = "nsew")
         self.wind_speed_minutely_button.grid(row = 0, column = 3, padx = 10, pady = 20, sticky = "nsew")
         self.wind_direction_minutely_button.grid(row = 0, column = 4, padx = 10, pady = 20, sticky = "nsew")
-        self.is_day_minutely_button.grid(row = 0, column = 5, padx = 10, pady = 20, sticky = "nsew")
+        self.precipitation_minutely_button.grid(row = 0, column = 5, padx = 10, pady = 20, sticky = "nsew")
+
+        temp_minutely_graph()
 
 class OptionsSidebarFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
@@ -492,7 +490,7 @@ class OptionsSidebarFrame(ctk.CTkFrame):
         self.information_textbox.grid(row = 7, column = 0, padx = 20, pady = (3, 10))
 
 class App(ctk.CTk):
-    width = 1040
+    width = 1180
     height = 800
 
     def __init__(self):
@@ -500,12 +498,11 @@ class App(ctk.CTk):
 
         self.title("Python Weather App")
         self.geometry(f"{self.width}x{self.height}")
-        self.resizable(True, True)
+        self.resizable(False, False)
 
         self.grid_rowconfigure((0, 1, 2, 3, 4, 5), weight = 1)
         self.grid_columnconfigure((0, 1, 2), weight = 1)
 
-        # fix rescaling issue
         self.master_frame = MasterFrame(master = self, height = self.height, width = self.width, corner_radius = 0, fg_color = "transparent")
         self.master_frame.grid(row = 0, column = 0, sticky = "nsew")
 
@@ -534,7 +531,7 @@ class App(ctk.CTk):
         self.minutely_graph_frame.grid(row = 7, column = 0, padx = 20, pady = (0, 200), sticky = "nw")
 
         self.options_frame = OptionsSidebarFrame(self.master_frame, border_color = "dark_color")
-        self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = (20, 0), pady = 10, sticky = "ns")
+        self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = (40, 0), pady = 10, sticky = "ns")
 
         self.set_appearance_mode_menu = ctk.CTkOptionMenu(self.options_frame, values = ["System", "Light", "Dark"], command = self.change_appearance_mode)
         self.set_ui_scaling = ctk.CTkOptionMenu(self.options_frame, values = ["80%", "90%", "100%", "110%", "120%"], command = self.change_ui_scaling)
@@ -554,4 +551,3 @@ class App(ctk.CTk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
-
