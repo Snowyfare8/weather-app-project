@@ -28,11 +28,11 @@ if "results" in geo_res:
     params = {
         "latitude": lat,
         "longitude": lon,
-        "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m", "uv_index"],
+        "hourly": ["temperature_2m", "relative_humidity_2m", "wind_speed_180m", "wind_direction_180m", "uv_index", "precipitation"],
         "current": ["temperature_2m", "relative_humidity_2m", "is_day", "wind_direction_10m", "wind_speed_10m",
                     "apparent_temperature", "rain", "precipitation", "showers", "snowfall",
                     "weather_code", "cloud_cover", "pressure_msl", "surface_pressure"],
-        "minutely_15": ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "wind_speed_80m", "wind_direction_80m", "is_day"],
+        "minutely_15": ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "wind_speed_80m", "wind_direction_80m", "precipitation"],
 	    "timezone": "auto",
 	    "forecast_days": 1,
 	    "wind_speed_unit": "ms",
@@ -48,7 +48,7 @@ if "results" in geo_res:
     minutely_15_apptemp = minutely_15.Variables(2).ValuesAsNumpy()
     minutely_15_windspeed = minutely_15.Variables(3).ValuesAsNumpy()
     minutely_15_winddirection = minutely_15.Variables(4).ValuesAsNumpy()
-    minutely_15_is_day = minutely_15.Variables(5).ValuesAsNumpy()
+    minutely_15_precipitation = minutely_15.Variables(5).ValuesAsNumpy()
 
     minutely_15_data = {"date": pd.date_range(
 	    start = pd.to_datetime(minutely_15.Time() + response.UtcOffsetSeconds(), unit = "s", utc = True),
@@ -62,7 +62,7 @@ if "results" in geo_res:
     minutely_15_data["apparent_temperature"] = minutely_15_apptemp
     minutely_15_data["wind_speed_80m"] = minutely_15_windspeed
     minutely_15_data["wind_direction_80m"] = minutely_15_winddirection
-    minutely_15_data["is_day"] = minutely_15_is_day
+    minutely_15_data["precipitation"] = minutely_15_precipitation
 
     current = response.Current()
     current_temp = current.Variables(0).Value()
@@ -87,6 +87,7 @@ if "results" in geo_res:
     hourly_windspeed = hourly.Variables(2).ValuesAsNumpy()
     hourly_winddirection = hourly.Variables(3).ValuesAsNumpy()
     hourly_uvindex = hourly.Variables(4).ValuesAsNumpy()
+    hourly_precipitation = hourly.Variables(5).ValuesAsNumpy()
 
     hourly_data = {"date": pd.date_range(
         start = pd.to_datetime(hourly.Time() + response.UtcOffsetSeconds(), unit = "s", utc = True),
@@ -100,6 +101,7 @@ if "results" in geo_res:
     hourly_data["wind_speed_180m"] = hourly_windspeed
     hourly_data["wind_direction_180m"] = hourly_winddirection
     hourly_data["uv_index"] = hourly_uvindex
+    hourly_data["precipitation"] = hourly_precipitation
 
     hourly_dataframe = pd.DataFrame(data = hourly_data)
 
