@@ -23,8 +23,6 @@ ctk.set_appearance_mode("system")
 ctk.set_default_color_theme("blue")
 
 # GUI
-
-# fix scrollable frame rescaling issues
 class MasterFrame(ctk.CTkScrollableFrame):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -48,6 +46,7 @@ class SummaryFrame(ctk.CTkFrame):
                 return "Good"
 
         daylight_var = "🌞" if current_is_day == 1.0 else "🌙"
+        precipitation_var = "🌧️Medium to Heavy Rain" if current_precipitation > 0.0 else "☁️Little to No Rain"
         curtemp_text = f"{int(current_temp)}{'°C'}"
         curhumidity_text = f"{int(current_humidity)}{' %'}"
         curwinddir_text = f"{int(current_winddirection)}{' Deg'}"
@@ -64,6 +63,8 @@ class SummaryFrame(ctk.CTkFrame):
 
             self.curweather = ctk.CTkLabel(self, text = "Current weather")
             self.current_temperature = ctk.CTkLabel(self, text = daylight_var + curtemp_text, font = ("Normal", 25, "normal"))
+
+            self.precipitation_status = ctk.CTkLabel(self, text = precipitation_var)
 
             self.humidity_text = ctk.CTkLabel(self, text  = "Humidity")
             self.current_humidity = ctk.CTkLabel(self, text = curhumidity_text)
@@ -98,6 +99,8 @@ class SummaryFrame(ctk.CTkFrame):
 
             self.curweather.grid(row = 0, column = 0, padx = 15, pady = 5)
             self.current_temperature.grid(row = 1, column = 0, padx = 15, pady = 10)
+
+            self.precipitation_status.grid(row = 2, column = 0, padx = 15, pady = 10)
 
             self.humidity_text.grid(row = 2, column = 1, padx = 15, pady = 0, sticky = "s")
             self.current_humidity.grid(row = 3, column = 1, padx = 15, pady = 2)  
@@ -159,8 +162,10 @@ class HourlyGraphFrame(ctk.CTkFrame):
             fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
 
             plot1 = fig.add_subplot(111)
+            plot2 = fig.add_subplot(111)
 
             plot1.plot(hourly_data["date"], hourly_data["wind_speed_180m"], label = "Wind Speed (m/s)")
+            plot2.plot(hourly_data["date"], hourly_data["wind_direction_180m"])
 
             canvas = FigureCanvasTkAgg(fig, master = self)  
             canvas.draw()
@@ -518,17 +523,17 @@ class App(ctk.CTk):
         self.hourly_graph_frame = HourlyGraphFrame(self.master_frame, border_color = "dark_color")
         self.hourly_graph_frame.grid(row = 3, column = 0, padx = 20, sticky = "nw") 
 
-        self.airquality_label = ctk.CTkLabel(self.master_frame, text = "Air Quality Details", font = ("Normal", 20, "bold"), fg_color = "transparent")
-        self.airquality_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
-
-        self.airquality_frame = AirQualityFrame(self.master_frame, border_color = "dark_color")
-        self.airquality_frame.grid(row = 5, column = 0, padx = 20, sticky = "nw")
-
         self.minutely_graph_label = ctk.CTkLabel(self.master_frame, text = "Minutely Weather Graph", font = ("Normal", 20, "bold"), fg_color = "transparent")
-        self.minutely_graph_label.grid(row = 6, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
+        self.minutely_graph_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
         self.minutely_graph_frame = MinutelyGraphFrame(self.master_frame, border_color  = "dark_color")
-        self.minutely_graph_frame.grid(row = 7, column = 0, padx = 20, pady = (0, 200), sticky = "nw")
+        self.minutely_graph_frame.grid(row = 5, column = 0, padx = 20, pady = (0, 200), sticky = "nw")
+
+        self.airquality_label = ctk.CTkLabel(self.master_frame, text = "Air Quality Details", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.airquality_label.grid(row = 6, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
+
+        self.airquality_frame = AirQualityFrame(self.master_frame, border_color = "dark_color")
+        self.airquality_frame.grid(row = 7, column = 0, padx = 20, sticky = "nw")
 
         self.options_frame = OptionsSidebarFrame(self.master_frame, border_color = "dark_color")
         self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = (40, 0), pady = 10, sticky = "ns")
@@ -551,3 +556,4 @@ class App(ctk.CTk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
+
