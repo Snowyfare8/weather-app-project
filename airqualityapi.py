@@ -18,6 +18,7 @@ cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
 retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
 openmeteo = openmeteo_requests.Client(session = retry_session)
 
+# Air Quality API
 if "results" in geo_res:
     lat = geo_res["results"][0]["latitude"]
     lon = geo_res["results"][0]["longitude"]
@@ -43,4 +44,3 @@ if "results" in geo_res:
     current_no2 = current.Variables(5).Value()
     current_so2 = current.Variables(6).Value()
     current_o3 = current.Variables(7).Value()
-
