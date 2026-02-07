@@ -162,10 +162,8 @@ class HourlyGraphFrame(ctk.CTkFrame):
             fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
 
             plot1 = fig.add_subplot(111)
-            plot2 = fig.add_subplot(111)
 
             plot1.plot(hourly_data["date"], hourly_data["wind_speed_180m"], label = "Wind Speed (m/s)")
-            plot2.plot(hourly_data["date"], hourly_data["wind_direction_180m"])
 
             canvas = FigureCanvasTkAgg(fig, master = self)  
             canvas.draw()
@@ -517,13 +515,13 @@ class App(ctk.CTk):
         self.display_frame = SummaryFrame(self.master_frame, border_color = "dark_color")
         self.display_frame.grid(row = 1, column = 0, padx = 10, sticky = "nw")
 
-        self.hourly_graph_label = ctk.CTkLabel(self.master_frame, text = "Hourly Weather", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.hourly_graph_label = ctk.CTkLabel(self.master_frame, text = "Hourly Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
         self.hourly_graph_label.grid(row = 2, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
         self.hourly_graph_frame = HourlyGraphFrame(self.master_frame, border_color = "dark_color")
         self.hourly_graph_frame.grid(row = 3, column = 0, padx = 20, sticky = "nw") 
 
-        self.minutely_graph_label = ctk.CTkLabel(self.master_frame, text = "Minutely Weather Graph", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.minutely_graph_label = ctk.CTkLabel(self.master_frame, text = "Minutely Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
         self.minutely_graph_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
         self.minutely_graph_frame = MinutelyGraphFrame(self.master_frame, border_color  = "dark_color")
