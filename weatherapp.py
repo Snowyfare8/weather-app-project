@@ -46,7 +46,7 @@ class SummaryFrame(ctk.CTkFrame):
                 return "Good"
 
         daylight_var = "🌞" if current_is_day == 1.0 else "🌙"
-        precipitation_var = "🌧️Medium to Heavy Rain" if current_precipitation > 0.0 else "☁️Little to No Rain"
+        precipitation_var = "🌧️Raining" if current_precipitation > 0.0 else "☁️Not Raining"
         curtemp_text = f"{int(current_temp)}{'°C'}"
         curhumidity_text = f"{int(current_humidity)}{' %'}"
         curwinddir_text = f"{int(current_winddirection)}{' Deg'}"
@@ -276,56 +276,6 @@ class HourlyGraphFrame(ctk.CTkFrame):
 
         temp_hourly_graph()
 
-class AirQualityFrame(ctk.CTkFrame):
-    def __init__(self, MasterFrame, **kwargs):
-        super().__init__(MasterFrame, **kwargs)
-
-        pm10_display = f"{int(current_pm10)}{' μg/m^3'}"
-        pm2_5_display = f"{int(current_pm2_5)}{' μg/m^3'}"
-        co_display = f"{int(current_co)}{' μg/m^3'}"
-        no2_display = f"{int(current_no2)}{' μg/m^3'}"
-        so2_display = f"{int(current_so2)}{' μg/m^3'}"
-        o3_display = f"{int(current_o3)}{' μg/m^3'}"
-
-        def air_quality_display(self):
-            self.pm10_text = ctk.CTkLabel(self, text = "Particulate Matter 10")
-            self.current_pm10 = ctk.CTkLabel(self, text = pm10_display)
-
-            self.pm2_5_text = ctk.CTkLabel(self, text = "Particulate Matter 2.5")
-            self.current_pm25 = ctk.CTkLabel(self, text = pm2_5_display)
-
-            self.co_text = ctk.CTkLabel(self, text = "Carbon Monoxide")
-            self.current_co = ctk.CTkLabel(self, text = co_display)
-
-            self.no2_text = ctk.CTkLabel(self, text = "Nitrogen Dioxide") 
-            self.current_no2 = ctk.CTkLabel(self, text = no2_display)
-
-            self.so2_text = ctk.CTkLabel(self, text = "Sulfur Dioxide")
-            self.current_so2 = ctk.CTkLabel(self, text = so2_display)
-
-            self.o3_text = ctk.CTkLabel(self, text = "Ozone")
-            self.current_o3 = ctk.CTkLabel(self, text = o3_display)
-
-            self.pm10_text.grid(row = 0, column = 0, padx = 10, pady = 5)
-            self.current_pm10.grid(row = 1, column = 0, padx = 10, pady = 5)
-
-            self.pm2_5_text.grid(row = 0, column = 1, padx = 10, pady = 5)
-            self.current_pm25.grid(row = 1, column = 1, padx = 10, pady = 5)
-
-            self.co_text.grid(row = 0, column = 2, padx = 10, pady = 5)
-            self.current_co.grid(row = 1, column = 2, padx = 10, pady = 5)
-
-            self.no2_text.grid(row = 0, column = 3, padx = 10, pady = 5)
-            self.current_no2.grid(row = 1, column = 3, padx = 10, pady = 5)
-
-            self.so2_text.grid(row = 0, column = 4, padx = 10, pady = 5)
-            self.current_so2.grid(row = 1, column = 4, padx = 10, pady = 5)
-
-            self.o3_text.grid(row = 0, column = 5, padx = 10, pady = 5)
-            self.current_o3.grid(row = 1, column = 5, padx = 10, pady = 5)
-       
-        air_quality_display(self)
-
 class MinutelyGraphFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
         super().__init__(MasterFrame, **kwargs)
@@ -467,6 +417,56 @@ class MinutelyGraphFrame(ctk.CTkFrame):
 
         temp_minutely_graph()
 
+class AirQualityFrame(ctk.CTkFrame):
+    def __init__(self, MasterFrame, **kwargs):
+        super().__init__(MasterFrame, **kwargs)
+
+        pm10_display = f"{int(current_pm10)}{' μg/m^3'}"
+        pm2_5_display = f"{int(current_pm2_5)}{' μg/m^3'}"
+        co_display = f"{int(current_co)}{' μg/m^3'}"
+        no2_display = f"{int(current_no2)}{' μg/m^3'}"
+        so2_display = f"{int(current_so2)}{' μg/m^3'}"
+        o3_display = f"{int(current_o3)}{' μg/m^3'}"
+
+        def air_quality_display(self):
+            self.pm10_text = ctk.CTkLabel(self, text = "Particulate Matter 10")
+            self.current_pm10 = ctk.CTkLabel(self, text = pm10_display)
+
+            self.pm2_5_text = ctk.CTkLabel(self, text = "Particulate Matter 2.5")
+            self.current_pm25 = ctk.CTkLabel(self, text = pm2_5_display)
+
+            self.co_text = ctk.CTkLabel(self, text = "Carbon Monoxide")
+            self.current_co = ctk.CTkLabel(self, text = co_display)
+
+            self.no2_text = ctk.CTkLabel(self, text = "Nitrogen Dioxide") 
+            self.current_no2 = ctk.CTkLabel(self, text = no2_display)
+
+            self.so2_text = ctk.CTkLabel(self, text = "Sulfur Dioxide")
+            self.current_so2 = ctk.CTkLabel(self, text = so2_display)
+
+            self.o3_text = ctk.CTkLabel(self, text = "Ozone")
+            self.current_o3 = ctk.CTkLabel(self, text = o3_display)
+
+            self.pm10_text.grid(row = 0, column = 0, padx = 10, pady = 5)
+            self.current_pm10.grid(row = 1, column = 0, padx = 10, pady = 5)
+
+            self.pm2_5_text.grid(row = 0, column = 1, padx = 10, pady = 5)
+            self.current_pm25.grid(row = 1, column = 1, padx = 10, pady = 5)
+
+            self.co_text.grid(row = 0, column = 2, padx = 10, pady = 5)
+            self.current_co.grid(row = 1, column = 2, padx = 10, pady = 5)
+
+            self.no2_text.grid(row = 0, column = 3, padx = 10, pady = 5)
+            self.current_no2.grid(row = 1, column = 3, padx = 10, pady = 5)
+
+            self.so2_text.grid(row = 0, column = 4, padx = 10, pady = 5)
+            self.current_so2.grid(row = 1, column = 4, padx = 10, pady = 5)
+
+            self.o3_text.grid(row = 0, column = 5, padx = 10, pady = 5)
+            self.current_o3.grid(row = 1, column = 5, padx = 10, pady = 5)
+       
+        air_quality_display(self)
+
 class OptionsSidebarFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
         super().__init__(MasterFrame, **kwargs)
@@ -531,7 +531,7 @@ class App(ctk.CTk):
         self.airquality_label.grid(row = 6, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
         self.airquality_frame = AirQualityFrame(self.master_frame, border_color = "dark_color")
-        self.airquality_frame.grid(row = 7, column = 0, padx = 20, pady = (0, 200) sticky = "nw")
+        self.airquality_frame.grid(row = 7, column = 0, padx = 20, pady = (0, 200), sticky = "nw")
 
         self.options_frame = OptionsSidebarFrame(self.master_frame, border_color = "dark_color")
         self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = (40, 0), pady = 10, sticky = "ns")
