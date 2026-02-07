@@ -525,13 +525,13 @@ class App(ctk.CTk):
         self.minutely_graph_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
         self.minutely_graph_frame = MinutelyGraphFrame(self.master_frame, border_color  = "dark_color")
-        self.minutely_graph_frame.grid(row = 5, column = 0, padx = 20, pady = (0, 200), sticky = "nw")
+        self.minutely_graph_frame.grid(row = 5, column = 0, padx = 20, pady = (0, 20), sticky = "nw")
 
         self.airquality_label = ctk.CTkLabel(self.master_frame, text = "Air Quality Details", font = ("Normal", 20, "bold"), fg_color = "transparent")
         self.airquality_label.grid(row = 6, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
         self.airquality_frame = AirQualityFrame(self.master_frame, border_color = "dark_color")
-        self.airquality_frame.grid(row = 7, column = 0, padx = 20, sticky = "nw")
+        self.airquality_frame.grid(row = 7, column = 0, padx = 20, pady = (0, 200) sticky = "nw")
 
         self.options_frame = OptionsSidebarFrame(self.master_frame, border_color = "dark_color")
         self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = (40, 0), pady = 10, sticky = "ns")
