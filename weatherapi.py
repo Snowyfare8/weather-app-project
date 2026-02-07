@@ -18,7 +18,7 @@ cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
 retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
 openmeteo = openmeteo_requests.Client(session = retry_session)
 
-# Weather API - rework maybe needed           
+# Weather API         
 if "results" in geo_res:
     lat = geo_res["results"][0]["latitude"]
     lon = geo_res["results"][0]["longitude"]
