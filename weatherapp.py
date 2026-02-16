@@ -515,23 +515,23 @@ class App(ctk.CTk):
         self.display_frame = SummaryFrame(self.master_frame, border_color = "dark_color")
         self.display_frame.grid(row = 1, column = 0, padx = 10, sticky = "nw")
 
-        self.daily_graph_label = ctk.CTkLabel(self.master_frame, text = "24 Hour Forecast Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
-        self.daily_graph_label.grid(row = 2, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
-
-        self.daily_graph_frame = DailyGraphFrame(self.master_frame, border_color  = "dark_color")
-        self.daily_graph_frame.grid(row = 3, column = 0, padx = 20, pady = (0, 20), sticky = "nw")
-
-        self.weekly_graph_label = ctk.CTkLabel(self.master_frame, text = "7 Day Forecast Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
-        self.weekly_graph_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
-
-        self.weekly_graph_frame = WeeklyGraphFrame(self.master_frame, border_color = "dark_color")
-        self.weekly_graph_frame.grid(row = 5, column = 0, padx = 20, sticky = "nw") 
-
         self.airquality_label = ctk.CTkLabel(self.master_frame, text = "Air Quality Details", font = ("Normal", 20, "bold"), fg_color = "transparent")
-        self.airquality_label.grid(row = 6, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
+        self.airquality_label.grid(row = 2, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
         self.airquality_frame = AirQualityFrame(self.master_frame, border_color = "dark_color")
-        self.airquality_frame.grid(row = 7, column = 0, padx = 20, pady = (0, 200), sticky = "nw")
+        self.airquality_frame.grid(row = 3, column = 0, padx = 20, pady = (0, 20), sticky = "nw")
+
+        self.daily_graph_label = ctk.CTkLabel(self.master_frame, text = "24 Hour Forecast Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.daily_graph_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
+
+        self.daily_graph_frame = DailyGraphFrame(self.master_frame, border_color  = "dark_color")
+        self.daily_graph_frame.grid(row = 5, column = 0, padx = 20, pady = (0, 20), sticky = "nw")
+
+        self.weekly_graph_label = ctk.CTkLabel(self.master_frame, text = "7 Day Forecast Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.weekly_graph_label.grid(row = 6, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
+
+        self.weekly_graph_frame = WeeklyGraphFrame(self.master_frame, border_color = "dark_color")
+        self.weekly_graph_frame.grid(row = 7, column = 0, padx = 20, pady = (0, 100), sticky = "nw") 
 
         self.options_frame = OptionsSidebarFrame(self.master_frame, border_color = "dark_color")
         self.options_frame.grid(row = 0, column = 1, rowspan = 800, padx = (40, 0), pady = 10, sticky = "ns")
