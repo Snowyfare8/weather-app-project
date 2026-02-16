@@ -8,7 +8,7 @@ import requests
 
 # Geolocator
 ip = geocoder.ip('me')
-city = ip.city 
+city = ip.city
 geo_url = "https://geocoding-api.open-meteo.com/v1/search"
 geo_params = {"name": city, "count": 1}
 geo_res = requests.get(geo_url, params=geo_params).json()
@@ -32,8 +32,8 @@ if "results" in geo_res:
         "current": ["temperature_2m", "relative_humidity_2m", "is_day", "wind_direction_10m", "wind_speed_10m",
                     "apparent_temperature", "precipitation", "cloud_cover", "pressure_msl", "surface_pressure"],
         "minutely_15": ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "wind_speed_80m", "wind_direction_80m", "precipitation"],
+        "forecast_minutely_15": 96,
 	    "timezone": "auto",
-	    "forecast_days": 1,
 	    "wind_speed_unit": "ms",
         "models": "best_match"
     }
@@ -85,8 +85,8 @@ if "results" in geo_res:
     hourly_precipitation = hourly.Variables(5).ValuesAsNumpy()
 
     hourly_data = {"date": pd.date_range(
-        start = pd.to_datetime(hourly.Time() + response.UtcOffsetSeconds(), unit = "s", utc = True),
-        end = pd.to_datetime(hourly.TimeEnd() + response.UtcOffsetSeconds(), unit = "s", utc = True),
+        start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
+        end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True),
         freq = pd.Timedelta(seconds = hourly.Interval()),
         inclusive = "right"
     )}
@@ -101,5 +101,3 @@ if "results" in geo_res:
     hourly_dataframe = pd.DataFrame(data = hourly_data)
 
     minutely_15_dataframe = pd.DataFrame(data = minutely_15_data)
-
-    print(f"Current precipitation: {current_precipitation}")
