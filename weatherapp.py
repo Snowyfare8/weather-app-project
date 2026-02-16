@@ -135,11 +135,152 @@ class SummaryFrame(ctk.CTkFrame):
         euaqi_grade_func(current_euroaqi)
         summary_display(self)
 
-class HourlyGraphFrame(ctk.CTkFrame):
+class DailyGraphFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
         super().__init__(MasterFrame, **kwargs)
 
-        def temp_hourly_graph():
+        def temp_daily_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(minutely_15_data["date"], minutely_15_data["temperature_2m"], label = "Temperature (°C)")
+
+            canvas = FigureCanvasTkAgg(fig, master = self)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            plot1.set_xlabel("By 3-hour intervals (x-axis)")
+            plot1.set_ylabel("Temperature (°C) (y-axis)")
+            plot1.set_title("Temperature 2m")       
+
+        def humidity_daily_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(minutely_15_data["date"], minutely_15_data["relative_humidity_2m"], label = "Humidity (%)")
+
+            canvas = FigureCanvasTkAgg(fig, master = self)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            plot1.set_xlabel("By 3-hour intervals (x-axis)")
+            plot1.set_ylabel("Humidity (%) (y-axis)")
+            plot1.set_title("Relative Humidity 2m")     
+
+        def apparent_temp_daily_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(minutely_15_data["date"], minutely_15_data["apparent_temperature"], label = "Apparent Temperature (°C)")
+
+            canvas = FigureCanvasTkAgg(fig, master = self)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            plot1.set_xlabel("By 3-hour intervals (x-axis)")
+            plot1.set_ylabel("Apparent Temperature (°C) (y-axis)")
+            plot1.set_title("Apparent Temperature")    
+
+        def wind_speed_daily_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(minutely_15_data["date"], minutely_15_data["wind_speed_80m"], label = "Wind Speed (m/s)")
+
+            canvas = FigureCanvasTkAgg(fig, master = self)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            plot1.set_xlabel("By 3-hour intervals (x-axis)")
+            plot1.set_ylabel("Wind Speed (m/s) (y-axis)")
+            plot1.set_title("Wind Speed 80m")    
+
+        def wind_direction_daily_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(minutely_15_data["date"], minutely_15_data["relative_humidity_2m"], label = "Wind Direction (°) ")
+
+            canvas = FigureCanvasTkAgg(fig, master = self)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            plot1.set_xlabel("By 3-hour intervals (x-axis)")
+            plot1.set_ylabel("Wind Direction (°) (y-axis)")
+            plot1.set_title("Wind Direction 80m")   
+
+        def precipitation_daily_graph():
+            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
+
+            plot1 = fig.add_subplot(111)
+
+            plot1.plot(minutely_15_data["date"], minutely_15_data["precipitation"], label = "Precipitation (mm)")
+
+            canvas = FigureCanvasTkAgg(fig, master = self)  
+            canvas.draw()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
+            toolbar.update()
+            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
+
+            plot1.set_xlabel("By 3-hour intervals (x-axis)")
+            plot1.set_ylabel("Precipitation (mm) (y-axis)")
+            plot1.set_title("Precipitation (Rain, snow, and/or hail)")
+
+        self.temp_daily_button = ctk.CTkButton(self, text = "Temperature", border_color = "#FFFFFF", command = temp_daily_graph )
+        self.humidity_daily_button = ctk.CTkButton(self, text = "Humidity", border_color = "#FFFFFF", command = humidity_daily_graph )
+        self.apparent_temp_daily_button = ctk.CTkButton(self, text = "Apparent Temperature", border_color = "#FFFFFF", command = apparent_temp_daily_graph )
+        self.wind_speed_daily_button = ctk.CTkButton(self, text = "Wind Speed", border_color = "#FFFFFF", command = wind_speed_daily_graph )
+        self.wind_direction_daily_button = ctk.CTkButton(self, text = "Wind Direction", border_color = "#FFFFFF", command = wind_direction_daily_graph )
+        self.precipitation_daily_button = ctk.CTkButton(self, text = "Precipitation", border_color = "#FFFFFF", command = precipitation_daily_graph )
+
+        self.temp_daily_button.configure(height = 5, width = 15)
+        self.humidity_daily_button.configure(height = 5, width = 15)
+        self.apparent_temp_daily_button.configure(height = 5, width = 15)
+        self.wind_speed_daily_button.configure(height = 5, width = 15) 
+        self.wind_direction_daily_button.configure(height = 5, width = 15)
+        self.precipitation_daily_button.configure(height = 5, width = 15)
+
+        self.temp_daily_button.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = "nsew")
+        self.humidity_daily_button.grid(row = 0, column = 1, padx = 10, pady = 20, sticky = "nsew")
+        self.apparent_temp_daily_button.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = "nsew")
+        self.wind_speed_daily_button.grid(row = 0, column = 3, padx = 10, pady = 20, sticky = "nsew")
+        self.wind_direction_daily_button.grid(row = 0, column = 4, padx = 10, pady = 20, sticky = "nsew")
+        self.precipitation_daily_button.grid(row = 0, column = 5, padx = 10, pady = 20, sticky = "nsew")
+
+        temp_daily_graph()
+
+class WeeklyGraphFrame(ctk.CTkFrame):
+    def __init__(self, MasterFrame, **kwargs):
+        super().__init__(MasterFrame, **kwargs)
+
+        def temp_weekly_graph():
             fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
 
             plot1 = fig.add_subplot(111)
@@ -154,11 +295,11 @@ class HourlyGraphFrame(ctk.CTkFrame):
             toolbar.update()
             canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
 
-            plot1.set_xlabel("By hours (x-axis)")
+            plot1.set_xlabel("By days (x-axis)")
             plot1.set_ylabel("Temperature (°C) (y-axis)")
             plot1.set_title("Temperature 2m")
 
-        def wind_speed_hourly_graph():
+        def wind_speed_weekly_graph():
             fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
 
             plot1 = fig.add_subplot(111)
@@ -173,11 +314,11 @@ class HourlyGraphFrame(ctk.CTkFrame):
             toolbar.update()
             canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
 
-            plot1.set_xlabel("By hours (x-axis)")
+            plot1.set_xlabel("By days (x-axis)")
             plot1.set_ylabel("Wind Speed (m/s) (y-axis)")
             plot1.set_title("Wind Speed 180m")
 
-        def wind_direction_hourly_graph():
+        def wind_direction_weekly_graph():
             fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
 
             plot1 = fig.add_subplot(111)
@@ -192,11 +333,11 @@ class HourlyGraphFrame(ctk.CTkFrame):
             toolbar.update()
             canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
 
-            plot1.set_xlabel("By hours (x-axis)")
+            plot1.set_xlabel("By days (x-axis)")
             plot1.set_ylabel("Wind Direction (°) (y-axis)")
             plot1.set_title("Wind Direction 180m")
 
-        def uv_hourly_graph():
+        def uv_weekly_graph():
             fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
 
             plot1 = fig.add_subplot(111)
@@ -215,7 +356,7 @@ class HourlyGraphFrame(ctk.CTkFrame):
             plot1.set_ylabel("UV Index (y-axis)")
             plot1.set_title("UV Index Today")
 
-        def humidity_hourly_graph():
+        def humidity_weekly_graph():
             fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
 
             plot1 = fig.add_subplot(111)
@@ -230,11 +371,11 @@ class HourlyGraphFrame(ctk.CTkFrame):
             toolbar.update()
             canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
     
-            plot1.set_xlabel("By hours (x-axis)")
+            plot1.set_xlabel("By days (x-axis)")
             plot1.set_ylabel("Relative Humidity (%) (y-axis)")
             plot1.set_title("Relative Humidity 2m")  
 
-        def precipitation_hourly_graph():
+        def precipitation_weekly_graph():
             fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
 
             plot1 = fig.add_subplot(111)
@@ -249,173 +390,32 @@ class HourlyGraphFrame(ctk.CTkFrame):
             toolbar.update()
             canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
     
-            plot1.set_xlabel("By hours (x-axis)")
+            plot1.set_xlabel("By days (x-axis)")
             plot1.set_ylabel("Precipitation (mm)(y-axis)")
             plot1.set_title("Precipitation (Rain, snow, and/or hail)")  
 
-        self.temp_hourly_button = ctk.CTkButton(self, text = "Temperature", border_color = "#FFFFFF", command = temp_hourly_graph)
-        self.windspeed_hourly_button = ctk.CTkButton(self, text = "Wind Speed", border_color = "#FFFFFF", command = wind_speed_hourly_graph)
-        self.winddirection_hourly_button = ctk.CTkButton(self, text = "Wind Direction", border_color = "#FFFFFF", command = wind_direction_hourly_graph)
-        self.uv_hourly_button = ctk.CTkButton(self, text = "UV Index", border_color = "#FFFFFF", command = uv_hourly_graph)
-        self.humidity_hourly_button = ctk.CTkButton(self, text = "Humidity", border_color = "#FFFFFF", command = humidity_hourly_graph)
-        self.precipitation_hourly_button = ctk.CTkButton(self, text = "Precipitation", border_color = "#FFFFFF", command = precipitation_hourly_graph)
+        self.temp_weekly_button = ctk.CTkButton(self, text = "Temperature", border_color = "#FFFFFF", command = temp_weekly_graph)
+        self.windspeed_weekly_button = ctk.CTkButton(self, text = "Wind Speed", border_color = "#FFFFFF", command = wind_speed_weekly_graph)
+        self.winddirection_weekly_button = ctk.CTkButton(self, text = "Wind Direction", border_color = "#FFFFFF", command = wind_direction_weekly_graph)
+        self.uv_weekly_button = ctk.CTkButton(self, text = "UV Index", border_color = "#FFFFFF", command = uv_weekly_graph)
+        self.humidity_weekly_button = ctk.CTkButton(self, text = "Humidity", border_color = "#FFFFFF", command = humidity_weekly_graph)
+        self.precipitation_weekly_button = ctk.CTkButton(self, text = "Precipitation", border_color = "#FFFFFF", command = precipitation_weekly_graph)
 
-        self.temp_hourly_button.configure(height = 5, width = 15)
-        self.windspeed_hourly_button.configure(height = 5, width = 15)
-        self.winddirection_hourly_button.configure(height = 5, width = 15)
-        self.uv_hourly_button.configure(height = 5, width = 15) 
-        self.humidity_hourly_button.configure(height = 5, width = 15)
-        self.precipitation_hourly_button.configure(height = 5, width = 15)
+        self.temp_weekly_button.configure(height = 5, width = 15)
+        self.windspeed_weekly_button.configure(height = 5, width = 15)
+        self.winddirection_weekly_button.configure(height = 5, width = 15)
+        self.uv_weekly_button.configure(height = 5, width = 15) 
+        self.humidity_weekly_button.configure(height = 5, width = 15)
+        self.precipitation_weekly_button.configure(height = 5, width = 15)
 
-        self.temp_hourly_button.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = "nsew")
-        self.windspeed_hourly_button.grid(row = 0, column = 1, padx = 10, pady = 20, sticky = "nsew")
-        self.winddirection_hourly_button.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = "nsew")
-        self.uv_hourly_button.grid(row = 0, column = 3, padx = 10, pady = 20, sticky = "nsew")
-        self.humidity_hourly_button.grid(row = 0, column = 4, padx = 10, pady = 20, sticky = "nsew")
-        self.precipitation_hourly_button.grid (row = 0, column = 5, padx = 10, pady = 20, sticky = "nsew") 
+        self.temp_weekly_button.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = "nsew")
+        self.windspeed_weekly_button.grid(row = 0, column = 1, padx = 10, pady = 20, sticky = "nsew")
+        self.winddirection_weekly_button.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = "nsew")
+        self.uv_weekly_button.grid(row = 0, column = 3, padx = 10, pady = 20, sticky = "nsew")
+        self.humidity_weekly_button.grid(row = 0, column = 4, padx = 10, pady = 20, sticky = "nsew")
+        self.precipitation_weekly_button.grid (row = 0, column = 5, padx = 10, pady = 20, sticky = "nsew") 
 
-        temp_hourly_graph()
-
-class MinutelyGraphFrame(ctk.CTkFrame):
-    def __init__(self, MasterFrame, **kwargs):
-        super().__init__(MasterFrame, **kwargs)
-
-        def temp_minutely_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
-
-            plot1 = fig.add_subplot(111)
-
-            plot1.plot(minutely_15_data["date"], minutely_15_data["temperature_2m"], label = "Temperature (°C)")
-
-            canvas = FigureCanvasTkAgg(fig, master = self)  
-            canvas.draw()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
-            toolbar.update()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            plot1.set_xlabel("By minutes (x-axis)")
-            plot1.set_ylabel("Temperature (°C) (y-axis)")
-            plot1.set_title("Temperature 2m")       
-
-        def humidity_minutely_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
-
-            plot1 = fig.add_subplot(111)
-
-            plot1.plot(minutely_15_data["date"], minutely_15_data["relative_humidity_2m"], label = "Humidity (%)")
-
-            canvas = FigureCanvasTkAgg(fig, master = self)  
-            canvas.draw()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
-            toolbar.update()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            plot1.set_xlabel("By minutes (x-axis)")
-            plot1.set_ylabel("Humidity (%) (y-axis)")
-            plot1.set_title("Relative Humidity 2m")     
-
-        def apparent_temp_minutely_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
-
-            plot1 = fig.add_subplot(111)
-
-            plot1.plot(minutely_15_data["date"], minutely_15_data["apparent_temperature"], label = "Apparent Temperature (°C)")
-
-            canvas = FigureCanvasTkAgg(fig, master = self)  
-            canvas.draw()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
-            toolbar.update()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            plot1.set_xlabel("By minutes (x-axis)")
-            plot1.set_ylabel("Apparent Temperature (°C) (y-axis)")
-            plot1.set_title("Apparent Temperature")    
-
-        def wind_speed_minutely_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
-
-            plot1 = fig.add_subplot(111)
-
-            plot1.plot(minutely_15_data["date"], minutely_15_data["wind_speed_80m"], label = "Wind Speed (m/s)")
-
-            canvas = FigureCanvasTkAgg(fig, master = self)  
-            canvas.draw()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
-            toolbar.update()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            plot1.set_xlabel("By minutes (x-axis)")
-            plot1.set_ylabel("Wind Speed (m/s) (y-axis)")
-            plot1.set_title("Wind Speed 80m")    
-
-        def wind_direction_minutely_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
-
-            plot1 = fig.add_subplot(111)
-
-            plot1.plot(minutely_15_data["date"], minutely_15_data["relative_humidity_2m"], label = "Wind Direction (°) ")
-
-            canvas = FigureCanvasTkAgg(fig, master = self)  
-            canvas.draw()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
-            toolbar.update()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            plot1.set_xlabel("By minutes (x-axis)")
-            plot1.set_ylabel("Wind Direction (°) (y-axis)")
-            plot1.set_title("Wind Direction 80m")   
-
-        def precipitation_minutely_graph():
-            fig = Figure(figsize = (10, 5), facecolor ="#FFFFFF", dpi = 100, edgecolor = "#FFFFFF" )
-
-            plot1 = fig.add_subplot(111)
-
-            plot1.plot(minutely_15_data["date"], minutely_15_data["precipitation"], label = "Precipitation (mm)")
-
-            canvas = FigureCanvasTkAgg(fig, master = self)  
-            canvas.draw()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            toolbar = NavigationToolbar2Tk(canvas, self, pack_toolbar = False)
-            toolbar.update()
-            canvas.get_tk_widget().grid(row = 1, column = 0, columnspan = 6, padx = 5, pady = 5, sticky = "w")
-
-            plot1.set_xlabel("By minutes (x-axis)")
-            plot1.set_ylabel("Precipitation (mm) (y-axis)")
-            plot1.set_title("Precipitation (Rain, snow, and/or hail)")
-
-        self.temp_minutely_button = ctk.CTkButton(self, text = "Temperature", border_color = "#FFFFFF", command = temp_minutely_graph )
-        self.humidity_minutely_button = ctk.CTkButton(self, text = "Humidity", border_color = "#FFFFFF", command = humidity_minutely_graph )
-        self.apparent_temp_minutely_button = ctk.CTkButton(self, text = "Apparent Temperature", border_color = "#FFFFFF", command = apparent_temp_minutely_graph )
-        self.wind_speed_minutely_button = ctk.CTkButton(self, text = "Wind Speed", border_color = "#FFFFFF", command = wind_speed_minutely_graph )
-        self.wind_direction_minutely_button = ctk.CTkButton(self, text = "Wind Direction", border_color = "#FFFFFF", command = wind_direction_minutely_graph )
-        self.precipitation_minutely_button = ctk.CTkButton(self, text = "Precipitation", border_color = "#FFFFFF", command = precipitation_minutely_graph )
-
-        self.temp_minutely_button.configure(height = 5, width = 15)
-        self.humidity_minutely_button.configure(height = 5, width = 15)
-        self.apparent_temp_minutely_button.configure(height = 5, width = 15)
-        self.wind_speed_minutely_button.configure(height = 5, width = 15) 
-        self.wind_direction_minutely_button.configure(height = 5, width = 15)
-        self.precipitation_minutely_button.configure(height = 5, width = 15)
-
-        self.temp_minutely_button.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = "nsew")
-        self.humidity_minutely_button.grid(row = 0, column = 1, padx = 10, pady = 20, sticky = "nsew")
-        self.apparent_temp_minutely_button.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = "nsew")
-        self.wind_speed_minutely_button.grid(row = 0, column = 3, padx = 10, pady = 20, sticky = "nsew")
-        self.wind_direction_minutely_button.grid(row = 0, column = 4, padx = 10, pady = 20, sticky = "nsew")
-        self.precipitation_minutely_button.grid(row = 0, column = 5, padx = 10, pady = 20, sticky = "nsew")
-
-        temp_minutely_graph()
+        temp_weekly_graph()
 
 class AirQualityFrame(ctk.CTkFrame):
     def __init__(self, MasterFrame, **kwargs):
@@ -489,8 +489,8 @@ class OptionsSidebarFrame(ctk.CTkFrame):
 
         self.information_textbox.insert("0.0", "This program's GUI was created using CustomTkinter, a modernized fork of python library Tkinter and uses Open-Meteo for the weather data, Open-Meteo is an open-source meteorological forecasting API.")
 
-        self.information_label.grid(row = 6, column = 0, padx = 20, pady = (10, 2))
-        self.information_textbox.grid(row = 7, column = 0, padx = 20, pady = (3, 10))
+        self.information_label.grid(row = 9, column = 0, padx = 20, pady = (10, 2))
+        self.information_textbox.grid(row = 10, column = 0, padx = 20, pady = (3, 10))
 
 class App(ctk.CTk):
     width = 1180
@@ -515,17 +515,17 @@ class App(ctk.CTk):
         self.display_frame = SummaryFrame(self.master_frame, border_color = "dark_color")
         self.display_frame.grid(row = 1, column = 0, padx = 10, sticky = "nw")
 
-        self.hourly_graph_label = ctk.CTkLabel(self.master_frame, text = "Hourly Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
-        self.hourly_graph_label.grid(row = 2, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
+        self.daily_graph_label = ctk.CTkLabel(self.master_frame, text = "24 Hour Forecast Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.daily_graph_label.grid(row = 2, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
-        self.hourly_graph_frame = HourlyGraphFrame(self.master_frame, border_color = "dark_color")
-        self.hourly_graph_frame.grid(row = 3, column = 0, padx = 20, sticky = "nw") 
+        self.daily_graph_frame = DailyGraphFrame(self.master_frame, border_color  = "dark_color")
+        self.daily_graph_frame.grid(row = 3, column = 0, padx = 20, pady = (0, 20), sticky = "nw")
 
-        self.minutely_graph_label = ctk.CTkLabel(self.master_frame, text = "Minutely Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
-        self.minutely_graph_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
+        self.weekly_graph_label = ctk.CTkLabel(self.master_frame, text = "7 Day Forecast Weather Graphs", font = ("Normal", 20, "bold"), fg_color = "transparent")
+        self.weekly_graph_label.grid(row = 4, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
 
-        self.minutely_graph_frame = MinutelyGraphFrame(self.master_frame, border_color  = "dark_color")
-        self.minutely_graph_frame.grid(row = 5, column = 0, padx = 20, pady = (0, 20), sticky = "nw")
+        self.weekly_graph_frame = WeeklyGraphFrame(self.master_frame, border_color = "dark_color")
+        self.weekly_graph_frame.grid(row = 5, column = 0, padx = 20, sticky = "nw") 
 
         self.airquality_label = ctk.CTkLabel(self.master_frame, text = "Air Quality Details", font = ("Normal", 20, "bold"), fg_color = "transparent")
         self.airquality_label.grid(row = 6, column = 0, padx = 20, pady = (40, 10), sticky = "nw")
@@ -543,7 +543,7 @@ class App(ctk.CTk):
         self.set_ui_scaling.grid(row = 4, column = 0, padx = 20, pady = (0, 20))
 
         self.set_ui_scaling.set("100%")
-
+    
     def change_appearance_mode(self, new_appearance_mode: str):
         ctk.set_appearance_mode(new_appearance_mode)
          
